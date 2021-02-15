@@ -2,8 +2,8 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, CssBaseline, Container, Grid, Divider } from '@material-ui/core';
 import FileUploadComponent from './Components/FileUploadComponent';
 import { ThemeProvider, unstable_createMuiStrictModeTheme } from '@material-ui/core/styles'
-import DialogProvider from './Components/DialogProvider';
-import PolicyPopup from './Components/PolicyPopup';
+import SelectCond from './Components/policy/SelectCond';
+
 
 
 const theme = unstable_createMuiStrictModeTheme();
@@ -12,7 +12,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-    <DialogProvider>
+
     <div className="App">
       <CssBaseline />
       <AppBar position="fixed">
@@ -27,13 +27,12 @@ function App() {
           <Grid container>
             <FileUploadComponent />
             <Divider />
-            <PolicyPopup />
+            <SelectCond />
             
           </Grid>
           
       </Container>
     </div>
-    </DialogProvider>
     </ThemeProvider>
   );
 }
