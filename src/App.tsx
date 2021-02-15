@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, CssBaseline, Container, Grid, Divider } from '@material-ui/core';
 import FileUploadComponent from './Components/FileUploadComponent';
 import { ThemeProvider, unstable_createMuiStrictModeTheme } from '@material-ui/core/styles'
-import SelectCond from './Components/policy/SelectCond';
+import SelectCond from './Components/app.component.cond';
 
 
 

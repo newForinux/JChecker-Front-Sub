@@ -12,13 +12,12 @@ const style = makeStyles({
 
 
 export interface InputDialogRawProps {
-    id: string;
     keepMounted: boolean;
     open: boolean;
 }
 
 
-export default function InputDialogRaw(props: InputDialogRawProps) {
+export default function InputDialog(props: InputDialogRawProps) {
     const classes = style();
     const { open: isOpen } = props;
     
@@ -136,7 +135,7 @@ export default function InputDialogRaw(props: InputDialogRawProps) {
                         닫기
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        제출
+                        완료
                 </Button>
             </DialogActions>
         </Dialog>
