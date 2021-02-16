@@ -15,7 +15,22 @@ import SuperclassDialog from "./policy/app.component.policy.super";
 
 export default function SelectCond() {
     const [open, setOpen] = useState(false);
+    const [policy, setPolicy] = useState({
+        runtimeCompare: [] as string[],
+        classes : [] as string[],
+        packages: [] as string[],
+        customException: [] as string[],
+        customStructure: [] as string[],
+        inheritSuper: [] as string[],
+        inheritInterface: [] as string[],
+        overriding: [] as string[],
+        overloading: [] as string[],
+        thread: false,
+        javadoc: false,
+        encapsulation: false
+    });
     
+
     const initial = {
         inputs: false,
         classes: false,
@@ -45,11 +60,34 @@ export default function SelectCond() {
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.name === 'threads' || 'javadoc' || 'encaps') {
+            setPolicy(
+                produce(draft => {
+                    draft[e.target.name] = e.target.checked;
+                })
+            )
+        }
+
         setState(
             produce(draft => {
                 draft[e.target.name] = e.target.checked;
             })
         );
+    }
+
+
+    const handleCreate = (types: string, data : Object) => {
+        setPolicy(
+            produce(draft => {
+                draft[types] = data;
+            })
+        );
+    }
+
+    
+    const handleSubmit = () => {
+        console.log( JSON.stringify(policy, null, 2) );
+        setOpen(false);
     }
 
     return (
@@ -166,37 +204,37 @@ export default function SelectCond() {
                     <Button onClick={handleClose} color="primary">
                             닫기
                     </Button>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={handleSubmit} color="primary">
                             제출
                     </Button>
                 </DialogActions>
                 
                 {state.inputs && 
-                    <InputDialog open={state.inputs} keepMounted /> }
+                    <InputDialog open={state.inputs} onCreate={handleCreate} keepMounted /> }
                 
                 {state.classes &&
-                    <ClassDialog open={state.classes} keepMounted /> }
+                    <ClassDialog open={state.classes} onCreate={handleCreate} keepMounted /> }
 
                 {state.packages &&
-                    <PackageDialog open={state.packages} keepMounted />}
+                    <PackageDialog open={state.packages} onCreate={handleCreate} keepMounted />}
                 
                 {state.interfaces &&
-                    <InterfaceDialog open={state.interfaces} keepMounted />}
+                    <InterfaceDialog open={state.interfaces} onCreate={handleCreate} keepMounted />}
 
                 {state.superclass &&
-                    <SuperclassDialog open={state.superclass} keepMounted />}
+                    <SuperclassDialog open={state.superclass} onCreate={handleCreate} keepMounted />}
 
                 {state.overriding &&
-                    <OverridingDialog open={state.overriding} keepMounted />}
+                    <OverridingDialog open={state.overriding} onCreate={handleCreate} keepMounted />}
 
                 {state.overloading &&
-                    <OverloadingDialog open={state.packages} keepMounted />}
+                    <OverloadingDialog open={state.overloading} onCreate={handleCreate} keepMounted />}
 
                 {state.custexc &&
-                    <ExceptionDialog open={state.custexc} keepMounted />}
+                    <ExceptionDialog open={state.custexc} onCreate={handleCreate} keepMounted />}
 
                 {state.custstr &&
-                    <StructureDialog open={state.custstr} keepMounted />}
+                    <StructureDialog open={state.custstr} onCreate={handleCreate} keepMounted />}
 
                 </Dialog>
             }

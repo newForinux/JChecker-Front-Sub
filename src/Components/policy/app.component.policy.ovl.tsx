@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface OverloadingDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -25,6 +26,7 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
     const [fields, setFields] = useState(["ovl-0"]);
     const [required, setRequired] = useState([""]);
     const [resOvl, setResOvl] = useState({
+        state: false,
         required: [] as string[],
     });
 
@@ -43,29 +45,37 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
     useEffect(() => {
         if (isOpen) {
             handleOpen();
-            console.log(isOpen);
         }
 
-        if (resOvl.required.length > 0)
-            console.log(resOvl);
-    },[isOpen, resOvl]);
+    },[isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resOvl);
+        props.onCreate("overloading", resOvl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resOvl]);
 
     
     const handleRequiredChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
         let newArr = [...required];
         newArr[index] = e.target.value;
         setRequired(newArr);
-        setOpen(false);
     }
     
+    
+    const handleClose = () => {
+        setResOvl({
+            state: false,
+            required: []
+        });
+        setOpen(false);
+    }
+
 
     const handleResIO = () => {
         setResOvl({
+            state: true,
             required: required
         });
         setOpen(false);
@@ -77,7 +87,8 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-ovl"
-                maxWidth="md"
+                maxWidth="sm"
+                fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
                 disableBackdropClick
@@ -91,7 +102,7 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
                 {fields.map((input, index) => (
                     <Grid xs={12} container spacing={1} item key={index}>
                         <Grid xs={12} item>
-                            <FormControl margin="normal">
+                            <FormControl fullWidth margin="normal">
                                 <TextField
                                     value={required[index] || ""}
                                     variant="outlined"

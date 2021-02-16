@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface SuperclassDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -26,6 +27,7 @@ export default function SuperclassDialog(props: SuperclassDialogRawProps) {
     const [fields, setFields] = useState(["spc-0"]);
     const [required, setRequired] = useState([""]);
     const [resSpc, setResSpc] = useState({
+        state: false,
         required: [] as string[],
     });
 
@@ -42,31 +44,38 @@ export default function SuperclassDialog(props: SuperclassDialogRawProps) {
 
 
     useEffect(() => {
-        if (isOpen) {
+        if (isOpen)
             handleOpen();
-            console.log(isOpen);
-        }
 
-        if (resSpc.required.length > 0)
-            console.log(resSpc);
-    },[isOpen, resSpc]);
+    }, [isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resSpc);
+        props.onCreate("inheritSuper", resSpc);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resSpc]);
 
     
     const handleRequiredChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
         let newArr = [...required];
         newArr[index] = e.target.value;
         setRequired(newArr);
-        setOpen(false);
     }
     
 
+    const handleClose = () => {
+        setResSpc({
+            state: false,
+            required: []
+        });
+        setOpen(false);
+    }
+
+
     const handleResIO = () => {
         setResSpc({
+            state: true,
             required: required
         });
         setOpen(false);

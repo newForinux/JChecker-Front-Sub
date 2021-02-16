@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface ClassDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -25,6 +26,7 @@ export default function ClassDialog(props: ClassDialogRawProps) {
     const [fields, setFields] = useState(["cs-0"]);
     const [required, setRequired] = useState([""]);
     const [resCS, setResCS] = useState({
+        state: false,
         required: [] as string[],
     });
 
@@ -43,41 +45,51 @@ export default function ClassDialog(props: ClassDialogRawProps) {
     useEffect(() => {
         if (isOpen) {
             handleOpen();
-            console.log(isOpen);
         }
-
-        if (resCS.required.length > 0)
-            console.log(resCS);
-    },[isOpen, resCS]);
+    },[isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resCS);
+        props.onCreate("classes", resCS);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resCS]);
+
 
     
     const handleRequiredChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
         let newArr = [...required];
         newArr[index] = e.target.value;
         setRequired(newArr);
-        setOpen(false);
     }
     
 
-    const handleResIO = () => {
+    const handleClose = () => {
         setResCS({
-            required: required
+            state: false,
+            required: []
         });
         setOpen(false);
     }
- 
+
+
+    const handleResIO = () => {
+        setResCS({
+            state: true,
+            required: required
+        });
+
+        setOpen(false);
+    }
+    
 
     return (
         <Dialog 
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-cs"
-                maxWidth="md"
+                maxWidth="sm"
+                fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
                 disableBackdropClick
@@ -91,7 +103,7 @@ export default function ClassDialog(props: ClassDialogRawProps) {
                 {fields.map((input, index) => (
                     <Grid xs={12} container spacing={1} item key={index}>
                         <Grid xs={12} item>
-                            <FormControl margin="normal">
+                            <FormControl fullWidth margin="normal">
                                 <TextField
                                     value={required[index] || ""}
                                     variant="outlined"

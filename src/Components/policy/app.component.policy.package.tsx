@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface PackageDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -25,6 +26,7 @@ export default function PackageDialog(props: PackageDialogRawProps) {
     const [fields, setFields] = useState(["pk-0"]);
     const [required, setRequired] = useState([""]);
     const [resPK, setResPK] = useState({
+        state: false,
         required: [] as string[],
     });
 
@@ -43,29 +45,38 @@ export default function PackageDialog(props: PackageDialogRawProps) {
     useEffect(() => {
         if (isOpen) {
             handleOpen();
-            console.log(isOpen);
         }
-
-        if (resPK.required.length > 0)
-            console.log(resPK);
-    },[isOpen, resPK]);
+    },[isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resPK);
+        props.onCreate("packages", resPK);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resPK]);
+
 
     
     const handleRequiredChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
         let newArr = [...required];
         newArr[index] = e.target.value;
         setRequired(newArr);
-        setOpen(false);
     }
     
 
+
+    const handleClose = () => {
+        setResPK({
+            state: false,
+            required: []
+        });
+        setOpen(false);
+    }
+
+
     const handleResIO = () => {
         setResPK({
+            state: true,
             required: required
         });
         setOpen(false);
@@ -77,7 +88,8 @@ export default function PackageDialog(props: PackageDialogRawProps) {
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-pk"
-                maxWidth="md"
+                maxWidth="sm"
+                fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
                 disableBackdropClick
@@ -91,7 +103,7 @@ export default function PackageDialog(props: PackageDialogRawProps) {
                 {fields.map((input, index) => (
                     <Grid xs={12} container spacing={1} item key={index}>
                         <Grid xs={12} item>
-                            <FormControl margin="normal">
+                            <FormControl fullWidth margin="normal">
                                 <TextField
                                     value={required[index] || ""}
                                     variant="outlined"

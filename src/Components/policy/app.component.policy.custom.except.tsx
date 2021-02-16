@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface ExceptionDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -25,6 +26,7 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
     const [fields, setFields] = useState(["cec-0"]);
     const [required, setRequired] = useState([""]);
     const [resCec, setResCec] = useState({
+        state: false,
         required: [] as string[],
     });
 
@@ -43,29 +45,38 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
     useEffect(() => {
         if (isOpen) {
             handleOpen();
-            console.log(isOpen);
         }
 
-        if (resCec.required.length > 0)
-            console.log(resCec);
-    },[isOpen, resCec]);
+    },[isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resCec);
+        props.onCreate("customException", resCec);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resCec]);
+
 
     
     const handleRequiredChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
         let newArr = [...required];
         newArr[index] = e.target.value;
         setRequired(newArr);
-        setOpen(false);
     }
     
 
+    const handleClose = () => {
+        setResCec({
+            state: false,
+            required: []
+        });
+        setOpen(false);
+    }
+
+
     const handleResIO = () => {
         setResCec({
+            state: true,
             required: required
         });
         setOpen(false);
@@ -78,7 +89,8 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-cec"
-                maxWidth="md"
+                maxWidth="sm"
+                fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
                 disableBackdropClick
@@ -92,7 +104,7 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
                 {fields.map((input, index) => (
                     <Grid xs={12} container spacing={1} item key={index}>
                         <Grid xs={12} item>
-                            <FormControl margin="normal">
+                            <FormControl fullWidth margin="normal">
                                 <TextField
                                     value={required[index] || ""}
                                     variant="outlined"

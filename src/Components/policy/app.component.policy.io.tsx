@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface InputDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -26,6 +27,7 @@ export default function InputDialog(props: InputDialogRawProps) {
     const [outputData, setOutputData] = useState([""]);
     const [inputData, setInputData] = useState([""]);
     const [resIO, setResIO] = useState({
+        state: false,
         input: [] as string[],
         output: [] as string[]
     });
@@ -45,17 +47,16 @@ export default function InputDialog(props: InputDialogRawProps) {
     useEffect(() => {
         if (isOpen) {
             handleOpen();
-            console.log(isOpen);
         }
 
-        if (resIO.input.length > 0 && resIO.output.length > 0)
-            console.log(resIO);
-    },[isOpen, resIO]);
+    },[isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resIO);
+        props.onCreate("runtimeCompare", resIO);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resIO]);
 
     
     const handleInputChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -72,8 +73,19 @@ export default function InputDialog(props: InputDialogRawProps) {
     }
 
 
+    const handleClose = () => {
+        setResIO({
+            state: false,
+            input: [],
+            output: []
+        })
+        setOpen(false);
+    }
+
+
     const handleResIO = () => {
         setResIO({
+            state: true,
             input: inputData,
             output: outputData
         })
@@ -87,6 +99,7 @@ export default function InputDialog(props: InputDialogRawProps) {
                 onClose={handleClose}
                 aria-labelledby="form-dialog-io"
                 maxWidth="md"
+                fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
                 disableBackdropClick
@@ -98,31 +111,31 @@ export default function InputDialog(props: InputDialogRawProps) {
                 <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
             </DialogContentText>
                 {fields.map((input, index) => (
-                    <Grid xs={12} container spacing={1} item key={index}>
-                        <Grid xs={6} item>
-                            <FormControl margin="normal">
+                    <Grid container spacing={1} key={index}>
+                        <Grid xs item>
+                            <FormControl fullWidth margin="normal">
                                 <TextField
                                     value={inputData[index] || ""}
                                     variant="outlined"
                                     id={"in-" + index}
                                     label="입력값"
                                     name={"in-" + index}
-                                    size="medium"
                                     className="io"
+                                    multiline
                                     onChange={handleInputChange(index)}
                                 />
                             </FormControl>
                         </Grid>
-                        <Grid xs={6} item>
-                            <FormControl margin="normal">
+                        <Grid xs item>
+                            <FormControl fullWidth margin="normal">
                                 <TextField
                                     value={outputData[index] || ""}
                                     variant="outlined"
                                     id={"out-" + index}
                                     label="출력값"
                                     name={"out-" + index}
-                                    size="medium"
                                     className="oi"
+                                    multiline
                                     onChange={handleOutputChange(index)}
                                 />
                             </FormControl>

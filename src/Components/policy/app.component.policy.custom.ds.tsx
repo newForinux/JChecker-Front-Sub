@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface StructureDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -25,6 +26,7 @@ export default function StructureDialog(props: StructureDialogRawProps) {
     const [fields, setFields] = useState(["cds-0"]);
     const [required, setRequired] = useState([""]);
     const [resCds, setResCds] = useState({
+        state: false,
         required: [] as string[],
     });
 
@@ -43,29 +45,38 @@ export default function StructureDialog(props: StructureDialogRawProps) {
     useEffect(() => {
         if (isOpen) {
             handleOpen();
-            console.log(isOpen);
         }
 
-        if (resCds.required.length > 0)
-            console.log(resCds);
-    },[isOpen, resCds]);
+    },[isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resCds);
+        props.onCreate("customStructure", resCds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resCds]);
+
 
     
     const handleRequiredChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
         let newArr = [...required];
         newArr[index] = e.target.value;
         setRequired(newArr);
-        setOpen(false);
     }
     
 
+    const handleClose = () => {
+        setResCds({
+            state: false,
+            required: []
+        });
+        setOpen(false);
+    }
+
+
     const handleResIO = () => {
         setResCds({
+            state: true,
             required: required
         });
         setOpen(false);
@@ -77,7 +88,8 @@ export default function StructureDialog(props: StructureDialogRawProps) {
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-cds"
-                maxWidth="md"
+                maxWidth="sm"
+                fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
                 disableBackdropClick
@@ -91,7 +103,7 @@ export default function StructureDialog(props: StructureDialogRawProps) {
                 {fields.map((input, index) => (
                     <Grid xs={12} container spacing={1} item key={index}>
                         <Grid xs={12} item>
-                            <FormControl margin="normal">
+                            <FormControl fullWidth margin="normal">
                                 <TextField
                                     value={required[index] || ""}
                                     variant="outlined"

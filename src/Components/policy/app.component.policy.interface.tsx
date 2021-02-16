@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface InterfaceDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -25,6 +26,7 @@ export default function InterfaceDialog(props: InterfaceDialogRawProps) {
     const [fields, setFields] = useState(["itf-0"]);
     const [required, setRequired] = useState([""]);
     const [resItf, setResItf] = useState({
+        state: false,
         required: [] as string[],
     });
 
@@ -43,29 +45,37 @@ export default function InterfaceDialog(props: InterfaceDialogRawProps) {
     useEffect(() => {
         if (isOpen) {
             handleOpen();
-            console.log(isOpen);
         }
 
-        if (resItf.required.length > 0)
-            console.log(resItf);
-    },[isOpen, resItf]);
+    },[isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resItf);
+        props.onCreate("inheritInterface", resItf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resItf]);
 
-    
+
     const handleRequiredChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
         let newArr = [...required];
         newArr[index] = e.target.value;
         setRequired(newArr);
+    }
+
+
+    const handleClose = () => {
+        setResItf({
+            state: false,
+            required: []
+        });
         setOpen(false);
     }
     
 
     const handleResIO = () => {
         setResItf({
+            state: true,
             required: required
         });
         setOpen(false);

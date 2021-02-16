@@ -14,6 +14,7 @@ const style = makeStyles({
 export interface OverridingDialogRawProps {
     keepMounted: boolean;
     open: boolean;
+    onCreate: Function;
 }
 
 
@@ -25,6 +26,7 @@ export default function OverridingDialog(props: OverridingDialogRawProps) {
     const [fields, setFields] = useState(["ovr-0"]);
     const [required, setRequired] = useState([""]);
     const [resOvr, setResOvr] = useState({
+        state: false,
         required: [] as string[],
     });
 
@@ -43,29 +45,38 @@ export default function OverridingDialog(props: OverridingDialogRawProps) {
     useEffect(() => {
         if (isOpen) {
             handleOpen();
-            console.log(isOpen);
         }
 
-        if (resOvr.required.length > 0)
-            console.log(resOvr);
-    },[isOpen, resOvr]);
+    },[isOpen]);
 
 
-    const handleClose = () => {
-        setOpen(false);
-    }
+    useEffect(() => {
+        console.log(resOvr);
+        props.onCreate("overriding", resOvr);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[resOvr]);
+
 
     
     const handleRequiredChange = (index : number) => (e : React.ChangeEvent<HTMLInputElement>) => {
         let newArr = [...required];
         newArr[index] = e.target.value;
         setRequired(newArr);
+    }
+
+    
+    const handleClose = () => {
+        setResOvr({
+            state: false,
+            required: []
+        });
         setOpen(false);
     }
-    
+
 
     const handleResIO = () => {
         setResOvr({
+            state: true,
             required: required
         });
         setOpen(false);
@@ -77,7 +88,8 @@ export default function OverridingDialog(props: OverridingDialogRawProps) {
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="form-dialog-ovr"
-                maxWidth="md"
+                maxWidth="sm"
+                fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
                 disableBackdropClick
@@ -91,7 +103,7 @@ export default function OverridingDialog(props: OverridingDialogRawProps) {
                 {fields.map((input, index) => (
                     <Grid xs={12} container spacing={1} item key={index}>
                         <Grid xs={12} item>
-                            <FormControl margin="normal">
+                            <FormControl fullWidth margin="normal">
                                 <TextField
                                     value={required[index] || ""}
                                     variant="outlined"
