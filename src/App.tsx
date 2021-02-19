@@ -1,40 +1,20 @@
+import WithRoot from './modules/root';
 import React from 'react';
-import { AppBar, Toolbar, Typography, CssBaseline, Container, Grid, Divider } from '@material-ui/core';
-import FileUploadComponent from './Components/app.component.file';
-import { ThemeProvider, unstable_createMuiStrictModeTheme } from '@material-ui/core/styles'
-import SelectCond from './Components/app.component.cond';
+import AppBarView from './modules/views/app.component.view.appbar';
+import StarterMajor from './modules/views/app.component.view.started';
+import SelectCond from './modules/components/app.component.cond';
 
 
-
-const theme = unstable_createMuiStrictModeTheme();
+//const theme = unstable_createMuiStrictModeTheme();
 
 function App() {
-
   return (
-    <ThemeProvider theme={theme}>
-
-    <div className="App">
-      <CssBaseline />
-      <AppBar position="fixed">
-        <Toolbar>
-          <Typography variant="h6">React File Upload</Typography>
-        </Toolbar>
-      </AppBar>
-      <Toolbar />
-      <Toolbar />
-
-      <Container maxWidth="md">
-          <Grid container>
-            <FileUploadComponent />
-            <Divider />
-            <SelectCond />
-            
-          </Grid>
-          
-      </Container>
-    </div>
-    </ThemeProvider>
+    <React.Fragment>
+      <AppBarView />
+      <StarterMajor />
+      
+    </React.Fragment>
   );
 }
 
-export default App;
+export default WithRoot(App);

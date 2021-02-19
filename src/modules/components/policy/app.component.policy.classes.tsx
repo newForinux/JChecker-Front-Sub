@@ -25,9 +25,13 @@ export default function ClassDialog(props: ClassDialogRawProps) {
     const [open, setOpen] = useState(isOpen);
     const [fields, setFields] = useState(["cs-0"]);
     const [required, setRequired] = useState([""]);
+    const [deduct, setDeduct] = useState(0);
+    const [max_deduct, setMax_deduct] = useState(0);
     const [resCS, setResCS] = useState({
         state: false,
         required: [] as string[],
+        deductPoint : 0,
+        maxDeduct: 0
     });
 
 
@@ -67,7 +71,9 @@ export default function ClassDialog(props: ClassDialogRawProps) {
     const handleClose = () => {
         setResCS({
             state: false,
-            required: []
+            required: [],
+            deductPoint: 0,
+            maxDeduct: 0
         });
         setOpen(false);
     }
@@ -76,7 +82,9 @@ export default function ClassDialog(props: ClassDialogRawProps) {
     const handleResIO = () => {
         setResCS({
             state: true,
-            required: required
+            required: required,
+            deductPoint: deduct,
+            maxDeduct: max_deduct
         });
 
         setOpen(false);
@@ -92,33 +100,57 @@ export default function ClassDialog(props: ClassDialogRawProps) {
                 fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
-                disableBackdropClick
         >
         <DialogTitle id="form-dialog-cs">필수 구현 클래스</DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                필수로 구현해야 할 클래스가 있나요?
+                필수로 구현해야 할 클래스가 있나요?        
                 <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
             </DialogContentText>
-                {fields.map((input, index) => (
-                    <Grid xs={12} container spacing={1} item key={index}>
-                        <Grid xs={12} item>
-                            <FormControl fullWidth margin="normal">
-                                <TextField
-                                    value={required[index] || ""}
-                                    variant="outlined"
-                                    id={"cs-" + index}
-                                    label="클래스 네임"
-                                    name={"cs-" + index}
-                                    size="medium"
-                                    className="cs"
-                                    onChange={handleRequiredChange(index)}
-                                />
-                            </FormControl>
-                        </Grid>
+
+            <Grid container spacing={2}>
+                <Grid item>   
+                    <TextField
+                        type="number"
+                        value={deduct}
+                        label="각 항목 당 감점할 점수"
+                        size="small"
+                        margin="dense"
+                        onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        type="number"
+                        value={max_deduct}
+                        label="최대 감점 점수"
+                        size="small"
+                        margin="dense"
+                        onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
+                    />
+                </Grid>
+            </Grid>
+
+            {fields.map((input, index) => (
+                <Grid xs={12} container spacing={1} item key={index}>
+                    <Grid xs={12} item>
+                        <FormControl fullWidth margin="normal">
+                            <TextField
+                                value={required[index] || ""}
+                                variant="outlined"
+                                id={"cs-" + index}
+                                label="클래스 네임"
+                                name={"cs-" + index}
+                                size="medium"
+                                className="cs"
+                                onChange={handleRequiredChange(index)}
+                            />
+                        </FormControl>
                     </Grid>
-                ))}
+                </Grid>
+            ))}
             </DialogContent>
+
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
                         닫기

@@ -25,9 +25,13 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
     const [open, setOpen] = useState(isOpen);
     const [fields, setFields] = useState(["cec-0"]);
     const [required, setRequired] = useState([""]);
+    const [deduct, setDeduct] = useState(0);
+    const [max_deduct, setMax_deduct] = useState(0);
     const [resCec, setResCec] = useState({
         state: false,
         required: [] as string[],
+        deductPoint : 0,
+        maxDeduct: 0
     });
 
 
@@ -68,7 +72,9 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
     const handleClose = () => {
         setResCec({
             state: false,
-            required: []
+            required: [],
+            deductPoint : 0,
+            maxDeduct: 0
         });
         setOpen(false);
     }
@@ -77,7 +83,9 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
     const handleResIO = () => {
         setResCec({
             state: true,
-            required: required
+            required: required,
+            deductPoint : deduct,
+            maxDeduct: max_deduct
         });
         setOpen(false);
     }
@@ -93,7 +101,6 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
                 fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
-                disableBackdropClick
         >
         <DialogTitle id="form-dialog-cec">사용자 정의 예외처리 클래스</DialogTitle>
         <DialogContent dividers>
@@ -101,25 +108,50 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
                 사용자가 직접 정의한 예외 처리 클래스가 필요한가요?
                 <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
             </DialogContentText>
-                {fields.map((input, index) => (
-                    <Grid xs={12} container spacing={1} item key={index}>
-                        <Grid xs={12} item>
-                            <FormControl fullWidth margin="normal">
-                                <TextField
-                                    value={required[index] || ""}
-                                    variant="outlined"
-                                    id={"cec-" + index}
-                                    label="사용자 클래스 네임"
-                                    name={"cec-" + index}
-                                    size="medium"
-                                    className="cec"
-                                    onChange={handleRequiredChange(index)}
-                                />
-                            </FormControl>
-                        </Grid>
+
+            <Grid container spacing={2}>
+                <Grid item>   
+                    <TextField
+                        type="number"
+                        value={deduct}
+                        label="각 항목 당 감점할 점수"
+                        size="small"
+                        margin="dense"
+                        onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        type="number"
+                        value={max_deduct}
+                        label="최대 감점 점수"
+                        size="small"
+                        margin="dense"
+                        onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
+                    />
+                </Grid>
+            </Grid>
+
+            {fields.map((input, index) => (
+                <Grid xs={12} container spacing={1} item key={index}>
+                    <Grid xs={12} item>
+                        <FormControl fullWidth margin="normal">
+                            <TextField
+                                value={required[index] || ""}
+                                variant="outlined"
+                                id={"cec-" + index}
+                                label="사용자 클래스 네임"
+                                name={"cec-" + index}
+                                size="medium"
+                                className="cec"
+                                onChange={handleRequiredChange(index)}
+                            />
+                        </FormControl>
                     </Grid>
-                ))}
+                </Grid>
+            ))}
             </DialogContent>
+
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
                         닫기
