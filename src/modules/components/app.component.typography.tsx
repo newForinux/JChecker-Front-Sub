@@ -51,6 +51,7 @@ export interface TypoProps extends TypographyProps, WithStyles<typeof styles> {
   variant: "h1" | "h3" | "h2" | "inherit" | "button" | "overline" | "caption" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2" | "body1" | "body2";
   marked?: false | 'center' | 'left';
   classes: any;
+  component?: any;
 }
 
 

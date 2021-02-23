@@ -48,7 +48,7 @@ export default function AppBarView () {
                         underline="none"
                         color="inherit"
                         className={classes.title}
-                        href="/jchecker/"
+                        href="/"
                     >
                         {'JChecker'}
                     </Link>
