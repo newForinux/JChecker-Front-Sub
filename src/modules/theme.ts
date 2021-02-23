@@ -30,7 +30,7 @@ const rawTheme = createMuiTheme({
     },
 
     typography: {
-        fontFamily: "'Work Sans', 'Roboto Condensed', sans-serif",
+        fontFamily: "'Sen', 'ELAND_Choice_M', sans-serif",
         fontSize: 14,
         fontWeightLight: 300,
         fontWeightRegular: 400,
@@ -69,7 +69,7 @@ const theme = {
         h2: {
             ...rawTheme.typography.h2,
             ...fontHeader,
-            fontSize: 48,
+            fontSize: 52,
         },
         h3: {
             ...rawTheme.typography.h3,
@@ -84,6 +84,7 @@ const theme = {
         h5: {
             ...rawTheme.typography.h5,
             fontSize: 20,
+            fontFamily: 'JSDongkang-Regular',
             fontWeight: rawTheme.typography.fontWeightLight,
         },
         h6: {
