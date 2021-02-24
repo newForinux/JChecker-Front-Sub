@@ -1,7 +1,7 @@
 import { Theme, withStyles, WithStyles } from "@material-ui/core";
-import StarterMajorLayout from "./app.component.view.started.layout";
-import Typographic from "../components/app.component.typography";
-import Button from "../components/app.component.button";
+import SectionLayout from "./SectionLayout";
+import Typographic from "../components/CTypography";
+import Button from "../components/Button";
 
 
 const backgroundImage = 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
@@ -34,15 +34,15 @@ const styles = (theme: Theme) => ({
 });
 
 
-function StarterMajor(props: Props) {
+function SectionMain(props: Props) {
     const { classes } = props;
 
     const handleBottom = () => {
-        window.scrollTo({top: 2000, left: 0, behavior: 'smooth'});
+        window.scrollTo({top: 1800, left: 0, behavior: 'smooth'});
     }
 
     return (
-        <StarterMajorLayout backgroundClassName={classes.background}>
+        <SectionLayout backgroundClassName={classes.background}>
             {}
             <img style={{ display : 'none' }} src={backgroundImage} alt="prioirty" />
             <Typographic color="inherit" align="center" variant="h2" marked="center">
@@ -64,10 +64,10 @@ function StarterMajor(props: Props) {
                 with ISEL, HGU.
             </Typographic>
 
-        </StarterMajorLayout>
+        </SectionLayout>
         
     );
 }
 
 
-export default withStyles(styles)(StarterMajor);
+export default withStyles(styles)(SectionMain);

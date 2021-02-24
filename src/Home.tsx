@@ -1,18 +1,18 @@
 import React from 'react';
 import WithRoot from './modules/root'
-import AppBarView from './modules/views/app.component.view.appbar';
-import StarterMajor from './modules/views/app.component.view.started';
-import StarterDetail from './modules/views/app.component.view.started.detail';
-import StarterConclusion from './modules/views/app.component.view.conclude';
-import AppFooter from './modules/views/app.component.view.footer';
+import AppBarView from './modules/views/Appbar';
+import SectionMain from './modules/views/SectionMain';
+import SectionDetail from './modules/views/SectionDetails';
+import SectionBegin from './modules/views/SectionBegin';
+import AppFooter from './modules/views/Footer';
 
 function Index() {
     return (
         <React.Fragment>
             <AppBarView />
-            <StarterMajor /> 
-            <StarterDetail />
-            <StarterConclusion />
+            <SectionMain /> 
+            <SectionDetail />
+            <SectionBegin />
             <AppFooter />
         </React.Fragment>
     )

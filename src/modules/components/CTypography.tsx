@@ -58,8 +58,6 @@ export interface TypoProps extends TypographyProps, WithStyles<typeof styles> {
 
 function Typographic(props: TypoProps) {
   const { children, classes, marked = false, variant, className, ...other } = props;
-  console.log( marked );
-  console.log(className);
 
   return (
     <Typography variantMapping={variantMapping} variant={variant} className={clsx(classes.root, className)} {...other}>

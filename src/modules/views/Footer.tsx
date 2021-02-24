@@ -1,6 +1,7 @@
-import { Container, Grid, Link, makeStyles, Theme } from "@material-ui/core";
+import { Container, Grid, Link, makeStyles, Theme, Typography } from "@material-ui/core";
+import Typographic from '../components/CTypography';
 import React from "react";
-import Typograhpic from '../components/app.component.typography';
+
 
 
 function Copyright() {
@@ -8,7 +9,7 @@ function Copyright() {
         <React.Fragment>
             {'ⓒ '}
             <Link color="inherit" href="https://isel.handong.edu/">
-                ISEL Lab in Handong Global University.
+                <b>ISEL</b> Lab in Handong Global University.
             </Link>{' '}
             {new Date().getFullYear()}
         </React.Fragment>
@@ -19,7 +20,8 @@ function Copyright() {
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'flex',
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.common.white,
     },
     container: {
         marginTop: theme.spacing(8),
@@ -64,6 +66,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: theme.spacing(0.5),
         paddingBottom: theme.spacing(0.5),
     },
+    white: {
+        color: theme.palette.common.white,
+    }
 }));
 
 
@@ -72,6 +77,7 @@ export default function AppFooter() {
     const classes = useStyles();
 
     return (
+        <Typography component="footer" className={classes.root}>
         <Container className={classes.container}>
             <Grid container spacing={1}>
                 <Grid item>
@@ -112,22 +118,23 @@ export default function AppFooter() {
                 </Grid>
                 
                 <Grid item>
-                    <Typograhpic variant="caption" gutterBottom>
-                        {'Icons made by'}
-                        <Link href="https://www.freepik.com" rel="sponsered" title="Freepik">
-                            Freepik
+                    <Typographic variant="caption" gutterBottom>
+                        {'Icons made by '}
+                        <Link href="https://www.freepik.com" rel="sponsered" title="Freepik" className={classes.white}>
+                            <b>Freepik</b>
                         </Link>
                         {' from '}
-                        <Link href="https://www.flaticon.com" rel="sponsered" title="Flaticon">
-                            www.flaticon.com
+                        <Link href="https://www.flaticon.com" rel="sponsered" title="Flaticon" className={classes.white}>
+                             www.flaticon.com
                         </Link>
                         {' is licensed by '}
-                        <Link href="https://creativecommons.org/licenses/by/3.0" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">
-                            CC 3.0 BY
+                        <Link href="https://creativecommons.org/licenses/by/3.0" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer" className={classes.white}>
+                             CC 3.0 BY
                         </Link>
-                    </Typograhpic>
+                    </Typographic>
                 </Grid>
             </Grid>
         </Container>
+        </Typography>
     )
 }

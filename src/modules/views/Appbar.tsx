@@ -1,7 +1,7 @@
-import AppBar from '../components/app.component.appbar';
+import AppBar from '../components/AppbarLayout';
 import { createStyles, Link, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import Toolbar, { styles as toolbarStyles } from '../components/app.component.toolbar';
+import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
 
 
 const useStyles = makeStyles((theme: Theme) => 

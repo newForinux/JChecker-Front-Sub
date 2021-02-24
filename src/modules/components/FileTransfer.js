@@ -2,7 +2,6 @@ import { useState } from "react";
 import Button from '@material-ui/core/Button';
 import { CloudUpload } from '@material-ui/icons';
 import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { CircularProgress, makeStyles } from "@material-ui/core";
 import { blue } from '@material-ui/core/colors';
@@ -34,26 +33,10 @@ const FileUploadComponent = () => {
     const [loading, setloading] = useState(false);
 
     const notify = (arg) => {
-        if (arg === 'complete')
-            toast.dark(`업로드 완료!👍`, {
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        else
-            toast.error('업로드 실패🙅‍♀️', {
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+        if (arg === 'complete');
+            
+        //NEED TODO using snackbar
+        
     }
 
     
@@ -117,7 +100,6 @@ const FileUploadComponent = () => {
                     {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                 </div>
             </form>
-            <ToastContainer />
         </div>   
     )
 }

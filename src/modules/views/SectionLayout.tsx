@@ -51,7 +51,7 @@ const styles = (theme: Theme) => createStyles ({
 
 
 
-function StarterMajorLayout(props: Props) {
+function SectionLayout(props: Props) {
     const { backgroundClassName, children, classes } = props;
 
     return (
@@ -66,4 +66,4 @@ function StarterMajorLayout(props: Props) {
 }
 
 
-export default withStyles(styles)(StarterMajorLayout);
+export default withStyles(styles)(SectionLayout);

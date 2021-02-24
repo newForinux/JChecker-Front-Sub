@@ -1,5 +1,5 @@
 import { Container, createStyles, Grid, Theme, withStyles, WithStyles } from "@material-ui/core";
-import Typographic from "../components/app.component.typography";
+import Typographic from "../components/CTypography";
 import React from "react";
 
 
@@ -47,7 +47,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-function StarterDetail(props: Props) {
+function SectionDetail(props: Props) {
     const { classes } = props;
 
     return (
@@ -111,4 +111,4 @@ function StarterDetail(props: Props) {
 
 
 
-export default withStyles(styles)(StarterDetail);
+export default withStyles(styles)(SectionDetail);
