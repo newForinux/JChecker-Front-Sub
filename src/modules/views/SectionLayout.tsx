@@ -1,10 +1,14 @@
-import { Container, withStyles } from "@material-ui/core";
+import { Container, createStyles, Theme, WithStyles, withStyles } from "@material-ui/core";
 import clsx from "clsx";
 
 
+interface Props extends WithStyles<typeof styles> {
+    backgroundClassName?: string,
+    children?: React.ReactNode,
+}
 
 
-const styles = (theme) => ({
+const styles = (theme: Theme) => createStyles ({
     root: {
         color: theme.palette.common.white,
         position: 'relative',
@@ -47,7 +51,7 @@ const styles = (theme) => ({
 
 
 
-function StarterMajorLayout(props) {
+function SectionLayout(props: Props) {
     const { backgroundClassName, children, classes } = props;
 
     return (
@@ -62,4 +66,4 @@ function StarterMajorLayout(props) {
 }
 
 
-export default withStyles(styles)(StarterMajorLayout);
+export default withStyles(styles)(SectionLayout);

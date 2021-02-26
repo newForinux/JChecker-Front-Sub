@@ -1,12 +1,10 @@
 import { Theme, withStyles, WithStyles } from "@material-ui/core";
-import React from "react";
-import StarterMajorLayout from "./app.component.view.started.layout";
-import Typographic from "../components/app.component.typography";
-import Button from "../components/app.component.button";
-import SelectCond from "../components/app.component.cond";
+import SectionLayout from "./SectionLayout";
+import Typographic from "../components/CTypography";
+import Button from "../components/Button";
 
 
-const backgroundImage = 'https://images.unsplash.com/photo-1584907797015-7554cd315667?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80';
+const backgroundImage = 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
 
 interface Props extends WithStyles<typeof styles> {}
 
@@ -14,11 +12,11 @@ interface Props extends WithStyles<typeof styles> {}
 const styles = (theme: Theme) => ({
     background: {
         backgroundImage: `url(${backgroundImage})`,
-        backgroundColor: '#9d9c97',
+        backgroundColor: '#5d5447',
         backgroundPosition: 'center',
     },
     button: {
-        minWidth: 200,
+        minWidth: 125,
     },
     h5: {
         marginBottom: theme.spacing(4),
@@ -30,37 +28,46 @@ const styles = (theme: Theme) => ({
     more: {
         marginTop: theme.spacing(2),
     },
+    textField: {
+        background: 'white',
+    }
 });
 
 
-function StarterMajor(props: Props) {
+function SectionMain(props: Props) {
     const { classes } = props;
 
+    const handleBottom = () => {
+        window.scrollTo({top: 1800, left: 0, behavior: 'smooth'});
+    }
+
     return (
-        <StarterMajorLayout backgroundClassName={classes.background}>
+        <SectionLayout backgroundClassName={classes.background}>
             {}
             <img style={{ display : 'none' }} src={backgroundImage} alt="prioirty" />
             <Typographic color="inherit" align="center" variant="h2" marked="center">
-                Judge your Assignments
+                JUDGE YOUR ASSIGNMENTS
             </Typographic>
             <Typographic color="inherit" align="center" variant="h5" className={classes.h5}>
-                Auto-judge your Java-programming assignmnet.
+                We provide OOP-based Java program scoring service through static analysis.
             </Typographic>
             <Button
                 color="secondary"
                 variant="contained"
-                size="large"
+                size="medium"
                 className={classes.button}
-                href="/jchecker/sign-in/"
+                onClick={handleBottom}
             >
                 시작하기
             </Button>
-            <SelectCond />
+            <Typographic variant="body2" color="inherit" className={classes.more}>
+                with ISEL, HGU.
+            </Typographic>
 
-        </StarterMajorLayout>
+        </SectionLayout>
         
     );
 }
 
 
-export default withStyles(styles)(StarterMajor);
+export default withStyles(styles)(SectionMain);
