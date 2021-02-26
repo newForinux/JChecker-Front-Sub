@@ -1,17 +1,27 @@
 import { AppBar, Link, makeStyles, Theme } from "@material-ui/core";
-import React from "react";
-import { Redirect, RouteComponentProps } from "react-router"
-import { classes } from '../../../data.json';
+import React, { useEffect, useState } from "react";
+import { RouteComponentProps } from "react-router"
 import WithRoot from '../../root';
 import SectionLayout from "../../views/SectionLayout";
 import Typographic from "../../components/CTypography";
 import Toolbar from '../../components/Toolbar';
 import AppFooter from "../../views/Footer";
+import axios from "axios";
+import FileUploadComponent from "../FileTransfer";
 
 interface RouteParams {
     id: string,
     token?: string
 }
+
+
+interface ClassroomState {
+    token: string,
+    className: string,
+    instructor: string,
+    date: string,
+}
+
 
 const backgroundImages = [
     'https://images.unsplash.com/photo-1613169620329-6785c004d900?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
@@ -73,18 +83,38 @@ const useStylesLayout = makeStyles((theme: Theme) => ({
 function EachClass(props: RouteComponentProps<RouteParams>) {
     const classesStyle = useStyles();
     const classesLayout = useStylesLayout();
-    
-    const classroom = classes.find(classroom => classroom.token === props.match.params.token);
 
-    if (classroom === undefined) {
-        alert("해당 클래스가 존재하지 않습니다.");
-        
-        return (
-            <Redirect path="*" to="/" />
-        )
-    }
-    
+    const initial = {
+        token: "",
+        className: "",
+        instructor: "",
+        date: "",
+    };
+    const [classroom, setClassroom] = useState(initial);
 
+    useEffect(() => {
+        if (classroom === initial) {
+            const currentClassroomState = async (): Promise<ClassroomState[]> => {
+                return await axios.get<ClassroomState[]>('/api/token/')
+                .then((response) => {
+                    return response.data
+                });
+            };
+
+            currentClassroomState()
+            .then(response => {
+                setClassroom(response.find(element => element.token === props.match.params.token) || initial);
+                
+                if (response.find(element => element.token === props.match.params.token) === undefined) {
+                    props.history.push('/');
+                    alert("클래스가 없습니다");
+                }
+                
+            })
+        }
+    });
+
+    
     return (
         <>
             <AppBar position="fixed" style={{ background: 'transparent', boxShadow: 'none' }} >
@@ -107,15 +137,16 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
                     {classroom.className}
                 </Typographic>
                 <Typographic color="inherit" align="center" variant="h5" className={classesStyle.h5}>
-                    opened by <b>{classroom.instructor}</b> on
+                    opened by <b>{classroom.instructor}</b> on {classroom.date}
                 </Typographic>
-                
+                <FileUploadComponent name = {classroom.token} />
                 <Typographic variant="body2" color="inherit" className={classesStyle.more}>
                     with ISEL, HGU.
                 </Typographic>
             </SectionLayout>
             <AppFooter />
         </>
+    
     );
 }
 
