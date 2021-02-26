@@ -4,5 +4,5 @@ import React from "react";
 
 export default function AppBar(children: AppBarProps) {
 
-    return <MuiAppBar elevation={0} position="static" {...children} />;
+    return <MuiAppBar style={{alignItems: 'center'}} elevation={0} position="static" {...children} />;
 }

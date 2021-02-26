@@ -17,19 +17,6 @@ const useStyles = makeStyles((theme: Theme) =>
         left: {
             flex: 1,
         },
-        leftLinkActive: {
-            color: theme.palette.common.white,
-        },
-        right: {
-            flex: 1,
-            display: 'flex',
-            justifyContent: 'flex-end',
-        },
-        rightLink: {
-            fontSize: 22,
-            color: theme.palette.common.white,
-            marginLeft: theme.spacing(3),
-        },
     })
 );
 
@@ -52,17 +39,6 @@ export default function AppBarView () {
                     >
                         {'JChecker'}
                     </Link>
-
-                    <div className={classes.right}>
-                        <Link
-                            variant="h6"
-                            underline="none"
-                            className={classes.rightLink}
-                            href="/jchecker/sign-in/"
-                        >
-                            {'로그인'}
-                        </Link>
-                    </div>
                 </Toolbar>
             </AppBar>
             <div className={classes.placeholder} />
