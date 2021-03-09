@@ -11,7 +11,7 @@ function Copyright() {
             <Link color="inherit" href="https://isel.handong.edu/">
                 <b>ISEL</b> Lab in Handong Global University.
             </Link>{' '}
-            {new Date().getFullYear()}
+            {new Date().getFullYear()}<br />
         </React.Fragment>
     );
 }
@@ -32,8 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: 60,
     },
     iconsWrapperSecondary: {
-        height: 80,
+        height: 76,
         marginBottom: theme.spacing(1),
+        alignItems: 'center',
     },
     icons: {
         width: 48,
@@ -43,11 +44,18 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
         marginRight: theme.spacing(1),
     },
+    logoIcons: {
+        maxWidth: 300,
+        maxHeight: 50,
+        display: 'flex',
+        
+        marginRight: theme.spacing(1),
+    },
     labIcons: {
         width: 70,
         height: 74,
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         marginRight: theme.spacing(1),
     },
@@ -87,6 +95,43 @@ function AppFooter() {
                         justify="flex-start"
                         className={classes.iconsWrapperSecondary}
                     >
+                        <img src="/static/logo.png" alt="logo" className={classes.logoIcons}/>
+                    </Grid>
+                    
+                    <Grid item>
+                        <Grid container direction="row" justify="flex-start">
+                            <Grid item className={classes.icons}>
+                                <a href="https://github.com/newForinux" className={classes.icons}>
+                                    <img src="/static/github.svg" alt="Github" />
+                                </a>
+                            </Grid>
+                            <Grid item className={classes.icons}>
+                                <a href="https://github.com/Yessir-kim" className={classes.icons}>
+                                    <img src="/static/github.svg" alt="Github" />
+                                </a>
+                            </Grid>
+                        </Grid>
+                        <Copyright />
+
+                        <Typographic variant="caption" gutterBottom>
+                            {'Icons made by '}
+                            <Link href="https://www.freepik.com" rel="sponsered" title="Freepik" className={classes.white}>
+                                <b>Freepik</b>
+                            </Link>
+                            {' from '}
+                            <Link href="https://www.flaticon.com" rel="sponsered" title="Flaticon" className={classes.white}>
+                                www.flaticon.com
+                            </Link>
+                            {' is licensed by '}
+                            <Link href="https://creativecommons.org/licenses/by/3.0" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer" className={classes.white}>
+                                CC 3.0 BY
+                            </Link>
+                        </Typographic>
+                    </Grid>
+                </Grid>
+                
+                <Grid item>
+                    <Grid container direction="row" justify="flex-start">
                         <Grid item className={classes.backgroundIcons}>
                             <img src="/static/hand.png" alt="Handong" className={classes.backgroundIcons}/>
                         </Grid>
@@ -94,42 +139,8 @@ function AppFooter() {
                             <img src="/static/ISEL-t.png" alt="ISEL" className={classes.labIcons}/>
                         </Grid>
                     </Grid>
-                    
-                    <Grid item>
-                        <Copyright />
-                    </Grid>
                     <Typographic variant="caption" gutterBottom>
                         Handong Global University 558 Handong-ro <br />Buk-gu, Pohang Gyeongbuk 37554 Republic of Korea
-                    </Typographic>
-                </Grid>
-                
-                <Grid item>
-                    <Grid container direction="row" justify="flex-start">
-                        <Grid item className={classes.icons}>
-                           <a href="https://github.com/newForinux" className={classes.icons}>
-                               <img src="/static/github.svg" alt="Github" />
-                           </a>
-                        </Grid>
-                        <Grid item className={classes.icons}>
-                           <a href="https://github.com/Yessir-kim" className={classes.icons}>
-                               <img src="/static/github.svg" alt="Github" />
-                           </a>
-                        </Grid>
-                    </Grid>
-
-                    <Typographic variant="caption" gutterBottom>
-                        {'Icons made by '}
-                        <Link href="https://www.freepik.com" rel="sponsered" title="Freepik" className={classes.white}>
-                            <b>Freepik</b>
-                        </Link>
-                        {' from '}
-                        <Link href="https://www.flaticon.com" rel="sponsered" title="Flaticon" className={classes.white}>
-                             www.flaticon.com
-                        </Link>
-                        {' is licensed by '}
-                        <Link href="https://creativecommons.org/licenses/by/3.0" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer" className={classes.white}>
-                             CC 3.0 BY
-                        </Link>
                     </Typographic>
                 </Grid>
             </Grid>
