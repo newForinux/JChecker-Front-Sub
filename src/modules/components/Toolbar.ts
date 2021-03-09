@@ -1,4 +1,5 @@
 import { Theme, Toolbar, withStyles } from "@material-ui/core";
+import React from "react";
 
 export const styles = (theme: Theme) => ({
     root: {
@@ -10,4 +11,4 @@ export const styles = (theme: Theme) => ({
 });
 
 
-export default withStyles(styles)(Toolbar);
+export default React.memo(withStyles(styles)(Toolbar));
