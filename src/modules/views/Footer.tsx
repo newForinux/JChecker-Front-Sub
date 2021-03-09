@@ -73,13 +73,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 
 
-export default function AppFooter() {
+function AppFooter() {
     const classes = useStyles();
 
     return (
         <Typography component="footer" className={classes.root}>
         <Container className={classes.container}>
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
                 <Grid item>
                     <Grid
                         container
@@ -94,13 +94,17 @@ export default function AppFooter() {
                             <img src="/static/ISEL-t.png" alt="ISEL" className={classes.labIcons}/>
                         </Grid>
                     </Grid>
-                    <Grid
-                        container
-                        direction='row'
-                        justify="flex-start"
-                        className={classes.iconsWrapper}
-                        spacing={2}
-                    >
+                    
+                    <Grid item>
+                        <Copyright />
+                    </Grid>
+                    <Typographic variant="caption" gutterBottom>
+                        Handong Global University 558 Handong-ro <br />Buk-gu, Pohang Gyeongbuk 37554 Republic of Korea
+                    </Typographic>
+                </Grid>
+                
+                <Grid item>
+                    <Grid container direction="row" justify="flex-start">
                         <Grid item className={classes.icons}>
                            <a href="https://github.com/newForinux" className={classes.icons}>
                                <img src="/static/github.svg" alt="Github" />
@@ -112,12 +116,7 @@ export default function AppFooter() {
                            </a>
                         </Grid>
                     </Grid>
-                    <Grid item>
-                        <Copyright />
-                    </Grid>
-                </Grid>
-                
-                <Grid item>
+
                     <Typographic variant="caption" gutterBottom>
                         {'Icons made by '}
                         <Link href="https://www.freepik.com" rel="sponsered" title="Freepik" className={classes.white}>
@@ -138,3 +137,6 @@ export default function AppFooter() {
         </Typography>
     )
 }
+
+
+export default React.memo(AppFooter);
