@@ -1,6 +1,6 @@
 import React from 'react';
 import WithRoot from './modules/root'
-import AppBarView from './modules/views/Appbar';
+import AppbarView from './modules/views/Appbar';
 import SectionMain from './modules/views/SectionMain';
 import SectionDetail from './modules/views/SectionDetails';
 import SectionBegin from './modules/views/SectionBegin';
@@ -9,7 +9,7 @@ import AppFooter from './modules/views/Footer';
 function Index() {
     return (
         <React.Fragment>
-            <AppBarView />
+            <AppbarView />
             <SectionMain /> 
             <SectionDetail />
             <SectionBegin />
@@ -18,4 +18,4 @@ function Index() {
     )
 }
 
-export default WithRoot(Index);
+export default React.memo(WithRoot(Index));
