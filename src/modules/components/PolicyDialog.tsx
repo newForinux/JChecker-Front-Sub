@@ -13,8 +13,14 @@ import PackageDialog from "./policy/app.component.policy.package";
 import SuperclassDialog from "./policy/app.component.policy.super";
 
 
+interface PolicyProps {
+    state: boolean,
+    token: string,
+    isDirect: boolean,
+};
 
-export default function SelectCond() {
+
+export default function SelectCond(props: PolicyProps) {
     const initial_state = {
         inputs: false,
         classes: false,
@@ -46,13 +52,10 @@ export default function SelectCond() {
         encapsulation: false
     };
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(props.state);
     const [policy, setPolicy] = useState(initial_data);
     const [state, setState] = useState(initial_state); 
 
-    const handleOpen = () => {
-        setOpen(true);
-    }
 
     const handleClose = () => {
         setOpen(false);
@@ -94,10 +97,6 @@ export default function SelectCond() {
 
     return (
         <div>
-            <Button variant="contained" color="secondary" onClick={handleOpen}>
-                채점 기준 설정
-            </Button>
-            
             {open &&
                 <Dialog 
                     open={open}
