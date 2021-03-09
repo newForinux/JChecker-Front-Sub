@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-export default function AppBarView () {
+function AppBarView () {
     const classes = useStyles();
 
     return (
@@ -45,3 +45,6 @@ export default function AppBarView () {
         </div>
     );
 }
+
+
+export default React.memo(AppBarView);
