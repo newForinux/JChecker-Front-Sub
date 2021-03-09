@@ -18,7 +18,7 @@ import Typographic from "../components/CTypography";
 import { Link, RouteComponentProps } from "react-router-dom";
 import React, { useState } from "react";
 import SearchIcon from '@material-ui/icons/Search';
-import MemoizedAppbar from './Appbar';
+import AppBarView from './Appbar';
 import WithRoot from '../root';
 import PolicyDialog from "../components/PolicyDialog";
 import Footer from "./Footer";
@@ -58,6 +58,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     more: {
         marginTop: theme.spacing(2),
+    },
+    dialogText: {
+        marginBottom: theme.spacing(1),
     },
     textField: {
         background: 'white',
@@ -109,6 +112,7 @@ function PreClasses (props: RouteComponentProps) {
 
     const handleClose = () => {
         setOpen(false);
+        setPopen(false);
         setInfo({
             className: "",
             instructor: "",
@@ -120,7 +124,7 @@ function PreClasses (props: RouteComponentProps) {
 
     return (
         <>
-        <MemoizedAppbar />
+        <AppBarView />
         <StarterMajorLayout backgroundClassName={classes.background}>
             {}
             <img style={{ display : 'none' }} src={backgroundImage} alt="prioirty" />
@@ -145,9 +149,6 @@ function PreClasses (props: RouteComponentProps) {
                         </Link>
                     )
                 }} />
-            <Typographic variant="body2" color="inherit" className={classes.more}>
-                with ISEL, HGU.
-            </Typographic>
         </StarterMajorLayout>
         
         {open &&
@@ -156,6 +157,8 @@ function PreClasses (props: RouteComponentProps) {
             onClose={handleClose}
             aria-labelledby="instructor-token-generator"
             aria-describedby="instructor-token-description"
+            disableBackdropClick={true}
+            disableEscapeKeyDown={true}
             maxWidth="sm"
             scroll='paper'
         >
@@ -173,7 +176,7 @@ function PreClasses (props: RouteComponentProps) {
                                 variant="outlined"
                                 label="클래스 네임"
                                 size="medium"
-                                className="cln"
+                                className={classes.dialogText}
                                 onChange={handleInfoChange("className")}
                             />
                             <TextField
@@ -181,7 +184,7 @@ function PreClasses (props: RouteComponentProps) {
                                 variant="outlined"
                                 label="개설자 이름"
                                 size="medium"
-                                className="instn"
+                                className={classes.dialogText}
                                 onChange={handleInfoChange("instructor")}
                             />
                         </FormControl>
@@ -208,14 +211,20 @@ function PreClasses (props: RouteComponentProps) {
                 <Button onClick={handleClose} color="primary">
                     닫기
                 </Button>
-                <Button onClick={handlePOpen} color="primary">
-                    확인
+                <Button onClick={handlePOpen} color="primary" disabled={info.token.length > 0 ? false : true}>
+                    다음으로
                 </Button>
             </DialogActions>
         </Dialog>
         }
         {popen &&
-            <PolicyDialog state={popen} token={info.token} isDirect={info.direct}/>
+            <PolicyDialog 
+                state={popen} 
+                className={info.className} 
+                instructor={info.instructor} 
+                token={info.token} 
+                isDirect={info.direct}
+            />
         }
             <Footer />
         </>
