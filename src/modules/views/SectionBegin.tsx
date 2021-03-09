@@ -55,4 +55,4 @@ function SectionBegin(props: Props) {
 }
 
 
-export default withStyles(styles)(SectionBegin);
+export default React.memo(withStyles(styles)(SectionBegin));

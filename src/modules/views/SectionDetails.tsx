@@ -111,4 +111,4 @@ function SectionDetail(props: Props) {
 
 
 
-export default withStyles(styles)(SectionDetail);
+export default React.memo(withStyles(styles)(SectionDetail));

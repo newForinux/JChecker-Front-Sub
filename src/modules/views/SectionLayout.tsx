@@ -1,5 +1,6 @@
 import { Container, createStyles, Theme, WithStyles, withStyles } from "@material-ui/core";
 import clsx from "clsx";
+import React from "react";
 
 
 interface Props extends WithStyles<typeof styles> {
@@ -66,4 +67,4 @@ function SectionLayout(props: Props) {
 }
 
 
-export default withStyles(styles)(SectionLayout);
+export default React.memo(withStyles(styles)(SectionLayout));

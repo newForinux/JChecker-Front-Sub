@@ -2,6 +2,7 @@ import { Theme, withStyles, WithStyles } from "@material-ui/core";
 import SectionLayout from "./SectionLayout";
 import Typographic from "../components/CTypography";
 import Button from "../components/Button";
+import React from "react";
 
 
 const backgroundImage = 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
@@ -70,4 +71,4 @@ function SectionMain(props: Props) {
 }
 
 
-export default withStyles(styles)(SectionMain);
+export default React.memo(withStyles(styles)(SectionMain));

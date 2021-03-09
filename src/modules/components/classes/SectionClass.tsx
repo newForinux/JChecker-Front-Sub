@@ -112,7 +112,8 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
                 
             })
         }
-    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[classroom]);
 
     
     return (
@@ -151,4 +152,4 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
 }
 
 
-export default WithRoot(EachClass);
+export default React.memo(WithRoot(EachClass));

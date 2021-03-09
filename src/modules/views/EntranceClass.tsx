@@ -90,4 +90,4 @@ function PreClasses (props: RouteComponentProps) {
 }
 
 
-export default WithRoot(PreClasses);
+export default React.memo(WithRoot(PreClasses));
