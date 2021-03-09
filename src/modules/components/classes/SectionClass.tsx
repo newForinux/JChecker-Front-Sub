@@ -66,6 +66,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     toolbar: {
         justifyContent: 'space-between',
     },
+    logo: {
+        marginTop: theme.spacing(1),
+        maxWidth: "300px",
+    },
 }));
 
 
@@ -127,7 +131,7 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
                         className={classesStyle.title}
                         href="/"
                     >
-                        {'JChecker'}
+                        <img src="/static/logo.png" alt="logo" className={classesStyle.logo} />
                     </Link>
                 </Toolbar>
             </AppBar>
@@ -141,9 +145,6 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
                     opened by <b>{classroom.instructor}</b> on {classroom.date}
                 </Typographic>
                 <FileUploadComponent name = {classroom.token} />
-                <Typographic variant="body2" color="inherit" className={classesStyle.more}>
-                    with ISEL, HGU.
-                </Typographic>
             </SectionLayout>
             <AppFooter />
         </>

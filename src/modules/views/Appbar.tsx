@@ -3,20 +3,24 @@ import { createStyles, Link, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
 import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
 
-
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         title: {
-            fontSize: 42,
-            letterSpacing: 7,
+            justifyContent: 'center',
+            alignItems: 'center',
         },
         placeholder: toolbarStyles(theme).root,
         toolbar: {
-            justifyContent: 'space-between',
+            justifyContent: 'center',
+            alignItems: 'center',
         },
         left: {
             flex: 1,
         },
+        logo: {
+            marginTop: theme.spacing(1),
+            maxWidth: "300px",
+        }
     })
 );
 
@@ -37,7 +41,8 @@ function AppBarView () {
                         className={classes.title}
                         href="/"
                     >
-                        {'JChecker'}
+                        <img src="/static/logo.png" alt="logo" className={classes.logo} />
+
                     </Link>
                 </Toolbar>
             </AppBar>
