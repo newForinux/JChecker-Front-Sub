@@ -19,7 +19,7 @@ interface ClassroomState {
     token: string,
     className: string,
     instructor: string,
-    date: string,
+    createDate: string,
 }
 
 
@@ -92,7 +92,7 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
         token: "",
         className: "",
         instructor: "",
-        date: "",
+        createDate: "",
     };
     const [classroom, setClassroom] = useState(initial);
 
@@ -113,7 +113,6 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
                     props.history.push('/');
                     alert("클래스가 없습니다");
                 }
-                
             })
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,7 +141,7 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
                     {classroom.className}
                 </Typographic>
                 <Typographic color="inherit" align="center" variant="h5" className={classesStyle.h5}>
-                    opened by <b>{classroom.instructor}</b> on {classroom.date}
+                    opened by <b>{classroom.instructor}</b> on {classroom.createDate}
                 </Typographic>
                 <FileUploadComponent name = {classroom.token} />
             </SectionLayout>
