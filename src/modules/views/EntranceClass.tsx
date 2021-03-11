@@ -80,9 +80,6 @@ function PreClasses (props: RouteComponentProps) {
                         </Link>
                     )
                 }} />
-            <Typographic variant="body2" color="inherit" className={classes.more}>
-                with ISEL, HGU.
-            </Typographic>
         </StarterMajorLayout>
         <AppFooter />
         </>
