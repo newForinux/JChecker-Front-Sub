@@ -1,20 +1,27 @@
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormGroup } from "@material-ui/core";
+import axios from "axios";
 import produce from "immer";
 
 import React, { useState } from "react";
 import ClassDialog from "./policy/app.component.policy.classes";
+import CompiledDialog from "./policy/app.component.policy.compiled";
 import StructureDialog from "./policy/app.component.policy.custom.ds";
 import ExceptionDialog from "./policy/app.component.policy.custom.except";
+import EncapDialog from "./policy/app.component.policy.encap";
 import InterfaceDialog from "./policy/app.component.policy.interface";
 import InputDialog from "./policy/app.component.policy.io";
+import JavadocDialog from "./policy/app.component.policy.javadoc";
 import OverloadingDialog from "./policy/app.component.policy.ovl";
 import OverridingDialog from "./policy/app.component.policy.ovr";
 import PackageDialog from "./policy/app.component.policy.package";
 import SuperclassDialog from "./policy/app.component.policy.super";
+import ThreadDialog from "./policy/app.component.policy.thread";
 
 
 interface PolicyProps {
     state: boolean,
+    className: string,
+    instructor: string,
     token: string,
     isDirect: boolean,
 };
@@ -22,6 +29,11 @@ interface PolicyProps {
 
 export default function SelectCond(props: PolicyProps) {
     const initial_state = {
+        className: props.className,
+        instructor: props.instructor,
+        feedback: props.isDirect,
+        token: props.token,
+        compiled: false,
         inputs: false,
         classes: false,
         packages: false,
@@ -38,18 +50,22 @@ export default function SelectCond(props: PolicyProps) {
 
 
     const initial_data = {
-        runtimeCompare: [] as string[],
-        classes : [] as string[],
-        packages: [] as string[],
-        customException: [] as string[],
-        customStructure: [] as string[],
-        inheritSuper: [] as string[],
-        inheritInterface: [] as string[],
-        overriding: [] as string[],
-        overloading: [] as string[],
-        thread: false,
-        javadoc: false,
-        encapsulation: false
+        className: props.className,
+        instructor: props.instructor,
+        feedback: props.isDirect,
+        token: props.token,
+        compiled: {state: false} as Object,
+        runtimeCompare: {state: false} as Object,
+        classes : {state: false} as Object,
+        packages: {state: false},
+        customException: {state: false} as Object,
+        customStructure: {state: false} as Object,
+        inheritSuper: {state: false} as Object,
+        inheritInterface: {state: false} as Object,
+        overriding: {state: false} as Object,
+        overloading: {state: false} as Object,
+        javadoc: {state: false} as Object,
+        
     };
 
     const [open, setOpen] = useState(props.state);
@@ -90,9 +106,15 @@ export default function SelectCond(props: PolicyProps) {
 
     
     const handleSubmit = () => {
-        console.log( JSON.stringify(policy, null, 2) );
-        setOpen(false);
-        setState(initial_state);
+        axios.post("/api/token/save", JSON.stringify(policy, null, 2), {
+            headers: {"Content-Type": 'application/json'}
+        }).then((res) => {
+            console.log(res);
+            setOpen(false);
+            setState(initial_state);
+        })
+
+        console.log( JSON.stringify(policy, null, 2));
     }
 
     return (
@@ -102,6 +124,8 @@ export default function SelectCond(props: PolicyProps) {
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="form-dialog-title"
+                    disableBackdropClick={true}
+                    disableEscapeKeyDown={true}
                     maxWidth="md"
                     scroll='paper'
                 >
@@ -111,6 +135,14 @@ export default function SelectCond(props: PolicyProps) {
                     과제 제출 시 정적 분석을 통해 검사할 항목을 선택할 수 있습니다.
                 </DialogContentText>
                     <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox checked={state.compiled}
+                                        onChange={handleChange}
+                                        name="compiled" />}
+                            label="Compile"
+                        />
+
                         <FormControlLabel
                             control={
                                 <Checkbox checked={state.inputs}
@@ -210,6 +242,9 @@ export default function SelectCond(props: PolicyProps) {
                     </Button>
                 </DialogActions>
                 
+                {state.compiled && 
+                    <CompiledDialog open={state.compiled} onCreate={handleCreate} keepMounted /> }
+
                 {state.inputs && 
                     <InputDialog open={state.inputs} onCreate={handleCreate} keepMounted /> }
                 
@@ -236,6 +271,15 @@ export default function SelectCond(props: PolicyProps) {
 
                 {state.custstr &&
                     <StructureDialog open={state.custstr} onCreate={handleCreate} keepMounted />}
+
+                {state.javadoc &&
+                    <JavadocDialog open={state.javadoc} onCreate={handleCreate} keepMounted />}
+
+                {state.thread &&
+                    <ThreadDialog open={state.thread} onCreate={handleCreate} keepMounted />}
+
+                {state.encapsulation &&
+                    <EncapDialog open={state.encapsulation} onCreate={handleCreate} keepMounted />}
 
                 </Dialog>
             }
