@@ -34,13 +34,6 @@ function FileUploadComponent (props) {
     const [file, setfile] = useState(null);
     const [disabled, setdisabled] = useState(true);
     const [loading, setloading] = useState(false);
-
-    const notify = (arg) => {
-        if (arg === 'complete');
-            
-        //NEED TODO using snackbar
-        
-    }
     
     const fileUpload = (file) => {
         const formData = new FormData();
@@ -50,7 +43,7 @@ function FileUploadComponent (props) {
             
             params: {
                 studentNum: '21600065',
-                assignment: props.name
+                token: props.name,
             },
             
             headers: {
@@ -67,12 +60,11 @@ function FileUploadComponent (props) {
             .then((response) => {
                 setloading(false)
                 console.log(response.data)
-                notify('complete')
             })
             .catch((response) => {
                 setloading(false)
                 console.log(response.data)
-                notify('error')
+                console.log(response)
             })
     };
 
@@ -95,7 +87,7 @@ function FileUploadComponent (props) {
             <form onSubmit={upload} className={classes.form}>
                 <input accept="application/zip" type="file" onChange={fileChange} name="file" />      
                 <div className={classes.wrapper}>
-                    <Button type="submit" variant="contained" color="inherit" size="large" startIcon={<CloudUpload />} disabled={disabled} onClick={handleClick}>
+                    <Button type="submit" variant="contained" color="secondary" size="large" startIcon={<CloudUpload />} disabled={disabled} onClick={handleClick}>
                         Upload
                     </Button>
                     {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
