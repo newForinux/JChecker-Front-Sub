@@ -3,6 +3,7 @@ import axios from "axios";
 import produce from "immer";
 
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next/";
 import ClassDialog from "./policy/app.component.policy.classes";
 import CompiledDialog from "./policy/app.component.policy.compiled";
 import StructureDialog from "./policy/app.component.policy.custom.ds";
@@ -28,6 +29,9 @@ interface PolicyProps {
 
 
 export default function SelectCond(props: PolicyProps) {
+
+    const { t } = useTranslation(); 
+
     const initial_state = {
         className: props.className,
         instructor: props.instructor,
@@ -65,7 +69,8 @@ export default function SelectCond(props: PolicyProps) {
         overriding: {state: false} as Object,
         overloading: {state: false} as Object,
         javadoc: {state: false} as Object,
-        
+        thread: {state: false} as Object,
+        encapsulation: {state: false} as Object,
     };
 
     const [open, setOpen] = useState(props.state);
@@ -129,10 +134,10 @@ export default function SelectCond(props: PolicyProps) {
                     maxWidth="md"
                     scroll='paper'
                 >
-                <DialogTitle id="form-dialog-title">채점 기준</DialogTitle>
+                <DialogTitle id="form-dialog-title">{t('dialog.1')}</DialogTitle>
                 <DialogContent dividers>
                 <DialogContentText>
-                    과제 제출 시 정적 분석을 통해 검사할 항목을 선택할 수 있습니다.
+                    {t('dialog.2')}
                 </DialogContentText>
                     <FormGroup>
                         <FormControlLabel
@@ -235,10 +240,10 @@ export default function SelectCond(props: PolicyProps) {
                 
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                            닫기
+                        {t('closed')}
                     </Button>
                     <Button onClick={handleSubmit} color="primary">
-                            제출
+                        {t('submit')}
                     </Button>
                 </DialogActions>
                 
