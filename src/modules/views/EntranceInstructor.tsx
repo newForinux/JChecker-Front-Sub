@@ -22,6 +22,7 @@ import AppBarView from './Appbar';
 import WithRoot from '../root';
 import PolicyDialog from "../components/PolicyDialog";
 import Footer from "./Footer";
+import { useTranslation } from "react-i18next/";
 
 
 const backgroundImage = 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
@@ -74,6 +75,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function PreClasses (props: RouteComponentProps) {
     const classes = useStyles();
+
+    const { t } = useTranslation();
+
     const [value, setValue] = useState("");
     const [open, setOpen] = useState(false);
     const [popen, setPopen] = useState(false);
@@ -129,15 +133,15 @@ function PreClasses (props: RouteComponentProps) {
             {}
             <img style={{ display : 'none' }} src={backgroundImage} alt="prioirty" />
             <Typographic color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
-                과제를 만드는 채점자이신가요?
+                {t('entrance.instructor title')}
             </Typographic>
             <Typographic color="inherit" align="center" variant="h5" className={classes.h5}>
-                <MLink onClick={handleOpen} color="secondary"><b>토큰을 생성해</b></MLink> 클래스를 만들 수 있습니다.<br /><br /><br />
-                이미 토큰이 있으신가요?<br />
-                토큰을 입력해 클래스를 관리하세요!
+                <MLink onClick={handleOpen} color="secondary">{t('entrance.instructor detail.1')}<b></b> </MLink> {t('entrance.instructor detail.2')}<br /><br /><br />
+                {t('entrance.instructor detail.3')}<br />
+                {t('entrance.instructor detail.4')}
             </Typographic>
-            <TextField value={value || ""} onChange={handleChange} label="토큰" style={{ margin: 8, borderColor: "white", borderRadius: 4, backgroundColor: "white", width: 500, fontSize: 16 }} 
-                placeholder="클래스 토큰을 입력하세요" margin="normal" variant="outlined" InputProps={{
+            <TextField value={value || ""} onChange={handleChange} label={t('input.')} style={{ margin: 8, borderColor: "white", borderRadius: 4, backgroundColor: "white", width: 500, fontSize: 16 }} 
+                placeholder={t('input.token')} margin="normal" variant="outlined" InputProps={{
                     classes: {
                         input: classes.resize,
                     },
@@ -162,11 +166,11 @@ function PreClasses (props: RouteComponentProps) {
             maxWidth="sm"
             scroll='paper'
         >
-            <DialogTitle id="instructor-token-title">토큰 생성 및 설정</DialogTitle>
+            <DialogTitle id="instructor-token-title">{t('entrance.instructor.tdialog.1')}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    <b>피드백 즉시 제공</b>을 체크하면 모든 채점 결과를 학생에게 즉시 제공합니다.<br />
-                    체크를 해제하면, 결과는 데이터베이스에만 저장되며 학생에게 보여지지 않습니다.
+                    {t('entrance.instructor.tdialog.e')} <b>{t('entrance.instructor.tdialog.2')}</b>{t('entrance.instructor.tdialog.3')}<br />
+                    {t('entrance.instructor.tdialog.4')}
                 </DialogContentText>
                 <Grid container spacing={2}>
                     <Grid xs={12} item>
@@ -174,7 +178,7 @@ function PreClasses (props: RouteComponentProps) {
                             <TextField
                                 value={info.className || ""}
                                 variant="outlined"
-                                label="클래스 네임"
+                                label={t('class name')}
                                 size="medium"
                                 className={classes.dialogText}
                                 onChange={handleInfoChange("className")}
@@ -182,7 +186,7 @@ function PreClasses (props: RouteComponentProps) {
                             <TextField
                                 value={info.instructor || ""}
                                 variant="outlined"
-                                label="개설자 이름"
+                                label={t('instructor name')}
                                 size="medium"
                                 className={classes.dialogText}
                                 onChange={handleInfoChange("instructor")}
@@ -191,7 +195,7 @@ function PreClasses (props: RouteComponentProps) {
                     </Grid>
                     <Grid xs={12} item>
                     <Button variant="contained" color="primary" onClick={handleGenerate} disabled={info.className.length < 3 || info.instructor.length < 3}>
-                            토큰 생성
+                        {t('generate.token')}
                     </Button>
                     </Grid>
                 </Grid>
@@ -204,15 +208,15 @@ function PreClasses (props: RouteComponentProps) {
                                 onChange={handleChecked}
                                 name="directFeedback"
                                 color="primary" />}
-                                label="피드백 즉시 제공"
+                                label={t('entrance.instructor.tdialog.2')}
                         />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                    닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handlePOpen} color="primary" disabled={info.token.length > 0 ? false : true}>
-                    다음으로
+                    {t('next')}
                 </Button>
             </DialogActions>
         </Dialog>

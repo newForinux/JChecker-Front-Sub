@@ -4,6 +4,7 @@ import Typographic from "../components/CTypography";
 import Button from "../components/Button";
 import React from "react";
 import FadeIn from "react-fade-in";
+import { useTranslation } from "react-i18next";
 
 
 const backgroundImage = 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
@@ -38,6 +39,7 @@ const styles = (theme: Theme) => ({
 
 function SectionMain(props: Props) {
     const { classes } = props;
+    const { t } = useTranslation();
 
     const handleBottom = () => {
         window.scrollTo({top: 1800, left: 0, behavior: 'smooth'});
@@ -63,7 +65,7 @@ function SectionMain(props: Props) {
                 className={classes.button}
                 onClick={handleBottom}
             >
-                시작하기
+                {t('start_button')}
             </Button>
             <Typographic variant="body2" color="inherit" className={classes.more}>
                 with ISEL, HGU.
