@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
     },
     icons: {
-        width: 48,
-        height: 48,
+        width: 35,
+        height: 35,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -99,18 +99,6 @@ function AppFooter() {
                     </Grid>
                     
                     <Grid item>
-                        <Grid container direction="row" justify="flex-start">
-                            <Grid item className={classes.icons}>
-                                <a href="https://github.com/newForinux" className={classes.icons}>
-                                    <img src="/static/github.svg" alt="Github" />
-                                </a>
-                            </Grid>
-                            <Grid item className={classes.icons}>
-                                <a href="https://github.com/Yessir-kim" className={classes.icons}>
-                                    <img src="/static/github.svg" alt="Github" />
-                                </a>
-                            </Grid>
-                        </Grid>
                         <Copyright />
 
                         <Typographic variant="caption" gutterBottom>
@@ -127,6 +115,19 @@ function AppFooter() {
                                 CC 3.0 BY
                             </Link>
                         </Typographic>
+
+                        <Grid container direction="row" justify="flex-start">
+                            <Grid item className={classes.icons}>
+                                <a href="https://github.com/newForinux" className={classes.icons}>
+                                    <img src="/static/github.svg" alt="Github" />
+                                </a>
+                            </Grid>
+                            <Grid item className={classes.icons}>
+                                <a href="https://github.com/Yessir-kim" className={classes.icons}>
+                                    <img src="/static/github.svg" alt="Github" />
+                                </a>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
                 
