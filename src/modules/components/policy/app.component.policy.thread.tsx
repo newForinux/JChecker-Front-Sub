@@ -1,16 +1,19 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react"
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    Grid, 
+    TextField } from "@material-ui/core";
+import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next/";
+import { DialogRawProp } from ".";
 
 
 
-interface PackageDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
-
-
-export default function ThreadDialog(props: PackageDialogRawProps) {
+export default function ThreadDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const { open: isOpen } = props;
     
     const [open, setOpen] = useState(isOpen);
@@ -35,7 +38,7 @@ export default function ThreadDialog(props: PackageDialogRawProps) {
 
     useEffect(() => {
         console.log(resThd);
-        props.onCreate("javadoc", resThd);
+        props.onCreate("thread", resThd);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resThd]);
 
@@ -63,16 +66,18 @@ export default function ThreadDialog(props: PackageDialogRawProps) {
         <Dialog 
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="form-dialog-jvd"
+                aria-labelledby="form-dialog-thd"
                 maxWidth="sm"
                 fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-pk">스레드 설정</DialogTitle>
+        <DialogTitle id="form-dialog-pk">
+            {t('policy.thread.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                스레드 클래스를 상속받고 실제로 사용했는지 판단합니다.
+                {t('policy.thread.2')}
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -80,7 +85,7 @@ export default function ThreadDialog(props: PackageDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="위반 시 감점할 점수"
+                        label={t('policy.basic.deduct.boolean')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -91,10 +96,10 @@ export default function ThreadDialog(props: PackageDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>

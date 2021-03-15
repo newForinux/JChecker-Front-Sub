@@ -1,6 +1,17 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, makeStyles, TextField } from "@material-ui/core";
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    FormControl, 
+    Grid, 
+    makeStyles, 
+    TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
+import { DialogRawProp } from ".";
+import { useTranslation } from "react-i18next/";
 
 
 const style = makeStyles({
@@ -11,14 +22,8 @@ const style = makeStyles({
 });
 
 
-export interface PackageDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
-
-
-export default function PackageDialog(props: PackageDialogRawProps) {
+export default function PackageDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const classes = style();
     const { open: isOpen } = props;
     
@@ -101,19 +106,23 @@ export default function PackageDialog(props: PackageDialogRawProps) {
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-pk">필수 구현 패키지</DialogTitle>
+        <DialogTitle id="form-dialog-pk">
+            {t('policy.package.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                패키지 경로를 지정하려면 입력하세요!
-                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
+                {t('policy.package.2')}
+                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>
+                    {t('add')}
+                </Button>
             </DialogContentText>
 
             <Grid container spacing={2}>
-                <Grid item>   
+                <Grid item>
                     <TextField
                         type="number"
                         value={deduct}
-                        label="각 항목 당 감점할 점수"
+                        label={t('policy.basic.deduct')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -123,7 +132,7 @@ export default function PackageDialog(props: PackageDialogRawProps) {
                     <TextField
                         type="number"
                         value={max_deduct}
-                        label="최대 감점 점수"
+                        label={t('policy.basic.max')}
                         size="small"
                         margin="dense"
                         onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
@@ -139,7 +148,7 @@ export default function PackageDialog(props: PackageDialogRawProps) {
                                 value={required[index] || ""}
                                 variant="outlined"
                                 id={"pk-" + index}
-                                label="패키지 경로"
+                                label={t('package path')}
                                 name={"pk-" + index}
                                 size="medium"
                                 className="pk"
@@ -153,10 +162,10 @@ export default function PackageDialog(props: PackageDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>

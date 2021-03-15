@@ -1,6 +1,17 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, makeStyles, TextField } from "@material-ui/core";
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    FormControl, 
+    Grid, 
+    makeStyles, 
+    TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
+import { useTranslation } from "react-i18next/";
+import { DialogRawProp } from ".";
 
 
 const style = makeStyles({
@@ -11,14 +22,8 @@ const style = makeStyles({
 });
 
 
-export interface InterfaceDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
-
-
-export default function InterfaceDialog(props: InterfaceDialogRawProps) {
+export default function InterfaceDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const classes = style();
     const { open: isOpen } = props;
     
@@ -100,11 +105,15 @@ export default function InterfaceDialog(props: InterfaceDialogRawProps) {
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-itf">인터페이스 상속 여부</DialogTitle>
+        <DialogTitle id="form-dialog-itf">
+            {t('policy.interface.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                인터페이스의 상속 여부를 판단합니다.
-                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
+                {t('policy.interface.2')}
+                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>
+                    {t('add')}
+                </Button>
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -112,7 +121,7 @@ export default function InterfaceDialog(props: InterfaceDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="각 항목 당 감점할 점수"
+                        label={t('policy.basic.deduct')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -122,7 +131,7 @@ export default function InterfaceDialog(props: InterfaceDialogRawProps) {
                     <TextField
                         type="number"
                         value={max_deduct}
-                        label="최대 감점 점수"
+                        label={t('policy.basic.max')}
                         size="small"
                         margin="dense"
                         onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
@@ -138,7 +147,7 @@ export default function InterfaceDialog(props: InterfaceDialogRawProps) {
                                 value={required[index] || ""}
                                 variant="outlined"
                                 id={"itf-" + index}
-                                label="인터페이스 네임"
+                                label={t('interface name')}
                                 name={"itf-" + index}
                                 size="medium"
                                 className="itf"
@@ -152,10 +161,10 @@ export default function InterfaceDialog(props: InterfaceDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>

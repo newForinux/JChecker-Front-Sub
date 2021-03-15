@@ -1,6 +1,17 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, makeStyles, TextField } from "@material-ui/core";
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    FormControl, 
+    Grid, 
+    makeStyles, 
+    TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
+import { useTranslation } from "react-i18next/";
+import { DialogRawProp } from ".";
 
 
 const style = makeStyles({
@@ -11,14 +22,9 @@ const style = makeStyles({
 });
 
 
-export interface ExceptionDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
 
-
-export default function ExceptionDialog(props: ExceptionDialogRawProps) {
+export default function ExceptionDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const classes = style();
     const { open: isOpen } = props;
     
@@ -102,11 +108,15 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-cec">사용자 정의 예외처리 클래스</DialogTitle>
+        <DialogTitle id="form-dialog-cec">
+            {t('policy.custom.ex.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                사용자가 직접 정의한 예외 처리 클래스가 필요한가요?
-                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
+                {t('policy.custom.ex.2')}
+                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>
+                    {t('add')}
+                </Button>
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -114,7 +124,7 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="각 항목 당 감점할 점수"
+                        label={t('policy.basic.deduct')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -124,7 +134,7 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
                     <TextField
                         type="number"
                         value={max_deduct}
-                        label="최대 감점 점수"
+                        label={t('policy.basic.max')}
                         size="small"
                         margin="dense"
                         onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
@@ -140,7 +150,7 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
                                 value={required[index] || ""}
                                 variant="outlined"
                                 id={"cec-" + index}
-                                label="사용자 클래스 네임"
+                                label={t('class name')}
                                 name={"cec-" + index}
                                 size="medium"
                                 className="cec"
@@ -154,10 +164,10 @@ export default function ExceptionDialog(props: ExceptionDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>

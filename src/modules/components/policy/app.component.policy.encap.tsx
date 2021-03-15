@@ -1,16 +1,19 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react"
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    Grid, 
+    TextField } from "@material-ui/core";
+import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next/";
+import { DialogRawProp } from ".";
 
 
 
-interface PackageDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
-
-
-export default function EncapDialog(props: PackageDialogRawProps) {
+export default function EncapDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const { open: isOpen } = props;
     
     const [open, setOpen] = useState(isOpen);
@@ -35,7 +38,7 @@ export default function EncapDialog(props: PackageDialogRawProps) {
 
     useEffect(() => {
         console.log(resEnc);
-        props.onCreate("javadoc", resEnc);
+        props.onCreate("encapsulation", resEnc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resEnc]);
 
@@ -63,16 +66,18 @@ export default function EncapDialog(props: PackageDialogRawProps) {
         <Dialog 
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="form-dialog-jvd"
+                aria-labelledby="form-dialog-enc"
                 maxWidth="sm"
                 fullWidth={true}
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-pk">캡슐화 사용 여부</DialogTitle>
+        <DialogTitle id="form-dialog-pk">
+            {t('policy.encap.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                private, public의 캡슐화 규칙을 지켰는지 판단합니다.
+                {t('policy.encap.2')}
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -80,7 +85,7 @@ export default function EncapDialog(props: PackageDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="위반 시 감점할 점수"
+                        label={t('policy.basic.deduct.boolean')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -91,10 +96,10 @@ export default function EncapDialog(props: PackageDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -1,16 +1,19 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react"
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    Grid, 
+    TextField } from "@material-ui/core";
+import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next/";
+import { DialogRawProp } from ".";
 
 
 
-interface PackageDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
-
-
-export default function JavadocDialog(props: PackageDialogRawProps) {
+export default function JavadocDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const { open: isOpen } = props;
     
     const [open, setOpen] = useState(isOpen);
@@ -69,10 +72,12 @@ export default function JavadocDialog(props: PackageDialogRawProps) {
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-pk">자바독 설정</DialogTitle>
+        <DialogTitle id="form-dialog-pk">
+            {t('policy.javadoc.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                모든 public 필드, 메소드는 자바독이 작성되어야 합니다.
+                {t('policy.javadoc.2')}
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -80,7 +85,7 @@ export default function JavadocDialog(props: PackageDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="위반 시 감점할 점수"
+                        label={t('policy.basic.deduct.boolean')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -91,10 +96,10 @@ export default function JavadocDialog(props: PackageDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>

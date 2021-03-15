@@ -1,6 +1,18 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, makeStyles, TextField } from "@material-ui/core";
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    FormControl, 
+    Grid, 
+    makeStyles, 
+    TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
+import { useTranslation } from "react-i18next/";
+import { DialogRawProp } from ".";
+
 
 
 const style = makeStyles({
@@ -11,14 +23,9 @@ const style = makeStyles({
 });
 
 
-export interface OverloadingDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
 
-
-export default function OverloadingDialog(props: OverloadingDialogRawProps) {
+export default function OverloadingDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const classes = style();
     const { open: isOpen } = props;
     
@@ -100,11 +107,15 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-ovl">오버로딩 검사</DialogTitle>
+        <DialogTitle id="form-dialog-ovl">
+            {t('policy.overloading.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                어떤 메서드가 오버로딩되어야 하나요?
-                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
+                {t('policy.overloading.2')}
+                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>
+                    {t('add')}
+                </Button>
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -112,7 +123,7 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="각 항목 당 감점할 점수"
+                        label={t('policy.basic.deduct')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -122,7 +133,7 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
                     <TextField
                         type="number"
                         value={max_deduct}
-                        label="최대 감점 점수"
+                        label={t('policy.basic.max')}
                         size="small"
                         margin="dense"
                         onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
@@ -138,7 +149,7 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
                                 value={required[index] || ""}
                                 variant="outlined"
                                 id={"ovl-" + index}
-                                label="메서드 네임"
+                                label={t('method name')}
                                 name={"ovl-" + index}
                                 size="medium"
                                 className="ovl"
@@ -152,10 +163,10 @@ export default function OverloadingDialog(props: OverloadingDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>
