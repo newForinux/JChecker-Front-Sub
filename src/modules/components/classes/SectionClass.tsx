@@ -8,19 +8,8 @@ import Toolbar from '../../components/Toolbar';
 import AppFooter from "../../views/Footer";
 import axios from "axios";
 import FileUploadComponent from "../FileTransfer";
+import { ClassroomProps, RouteParamsProps } from ".";
 
-interface RouteParams {
-    id: string,
-    token?: string
-}
-
-
-interface ClassroomState {
-    token: string,
-    className: string,
-    instructor: string,
-    createDate: string,
-}
 
 
 const backgroundImages = [
@@ -84,7 +73,7 @@ const useStylesLayout = makeStyles((theme: Theme) => ({
 }));
 
 
-function EachClass(props: RouteComponentProps<RouteParams>) {
+function EachClass(props: RouteComponentProps<RouteParamsProps>) {
     const classesStyle = useStyles();
     const classesLayout = useStylesLayout();
 
@@ -98,8 +87,8 @@ function EachClass(props: RouteComponentProps<RouteParams>) {
 
     useEffect(() => {
         if (classroom === initial) {
-            const currentClassroomState = async (): Promise<ClassroomState[]> => {
-                return await axios.get<ClassroomState[]>('/api/token/')
+            const currentClassroomState = async (): Promise<ClassroomProps[]> => {
+                return await axios.get<ClassroomProps[]>('/api/token/')
                 .then((response) => {
                     return response.data
                 });
