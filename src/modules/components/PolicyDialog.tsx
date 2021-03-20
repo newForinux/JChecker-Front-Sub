@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next/";
 import ClassDialog from "./policy/app.component.policy.classes";
 import CompiledDialog from "./policy/app.component.policy.compiled";
+import CountDialog from "./policy/app.component.policy.count";
 import StructureDialog from "./policy/app.component.policy.custom.ds";
 import ExceptionDialog from "./policy/app.component.policy.custom.except";
 import EncapDialog from "./policy/app.component.policy.encap";
@@ -39,6 +40,7 @@ export default function SelectCond(props: PolicyProps) {
         feedback: props.isDirect,
         token: props.token,
         itoken: props.itoken,
+        count: false,
         compiled: false,
         inputs: false,
         classes: false,
@@ -61,19 +63,20 @@ export default function SelectCond(props: PolicyProps) {
         feedback: props.isDirect,
         token: props.token,
         itoken: props.itoken,
-        compiled: {state: false} as Object,
-        runtimeCompare: {state: false} as Object,
-        classes : {state: false} as Object,
-        packages: {state: false},
-        customException: {state: false} as Object,
-        customStructure: {state: false} as Object,
-        inheritSuper: {state: false} as Object,
-        inheritInterface: {state: false} as Object,
-        overriding: {state: false} as Object,
-        overloading: {state: false} as Object,
-        javadoc: {state: false} as Object,
-        thread: {state: false} as Object,
-        encapsulation: {state: false} as Object,
+        count: { state: false } as Object,
+        compiled: { state: false } as Object,
+        runtimeCompare: { state: false } as Object,
+        classes : { state: false } as Object,
+        packages: { state: false },
+        customException: { state: false } as Object,
+        customStructure: { state: false } as Object,
+        inheritSuper: { state: false } as Object,
+        inheritInterface: { state: false } as Object,
+        overriding: { state: false } as Object,
+        overloading: { state: false } as Object,
+        javadoc: { state: false } as Object,
+        thread: { state: false } as Object,
+        encapsulation: { state: false } as Object,
     };
 
     const [open, setOpen] = useState(props.state);
@@ -143,6 +146,14 @@ export default function SelectCond(props: PolicyProps) {
                     {t('dialog.2')}
                 </DialogContentText>
                     <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox checked={state.count}
+                                        onChange={handleChange}
+                                        name="count" />}
+                            label="Count"
+                        />
+
                         <FormControlLabel
                             control={
                                 <Checkbox checked={state.compiled}
@@ -250,6 +261,9 @@ export default function SelectCond(props: PolicyProps) {
                     </Button>
                 </DialogActions>
                 
+                {state.count && 
+                    <CountDialog open={state.count} onCreate={handleCreate} keepMounted /> } 
+
                 {state.compiled && 
                     <CompiledDialog open={state.compiled} onCreate={handleCreate} keepMounted /> }
 
