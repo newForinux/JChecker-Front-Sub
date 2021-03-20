@@ -24,6 +24,7 @@ interface PolicyProps {
     className: string,
     instructor: string,
     token: string,
+    itoken: string,
     isDirect: boolean,
 };
 
@@ -37,6 +38,7 @@ export default function SelectCond(props: PolicyProps) {
         instructor: props.instructor,
         feedback: props.isDirect,
         token: props.token,
+        itoken: props.itoken,
         compiled: false,
         inputs: false,
         classes: false,
@@ -58,6 +60,7 @@ export default function SelectCond(props: PolicyProps) {
         instructor: props.instructor,
         feedback: props.isDirect,
         token: props.token,
+        itoken: props.itoken,
         compiled: {state: false} as Object,
         runtimeCompare: {state: false} as Object,
         classes : {state: false} as Object,
@@ -119,7 +122,7 @@ export default function SelectCond(props: PolicyProps) {
             setState(initial_state);
         })
 
-        console.log( JSON.stringify(policy, null, 2));
+        console.log( JSON.stringify(policy, null, 2) );
     }
 
     return (

@@ -32,6 +32,7 @@ interface InfoProps {
     className: string;
     instructor: string;
     token: string;
+    itoken: string;
     direct: boolean;
 }
 
@@ -85,6 +86,7 @@ function PreClasses (props: RouteComponentProps) {
         className: "",
         instructor: "",
         token: "",
+        itoken: "",
         direct: false,
     });
 
@@ -102,8 +104,11 @@ function PreClasses (props: RouteComponentProps) {
 
     const handleGenerate = () => {
         let random =  Math.random().toString(36).substr(2, 11);
-        setInfo({ ...info, token: random})
+        let irandom = Math.random().toString(36).substr(2, 6);
+        setInfo({ ...info, token: random, itoken: irandom });
     }
+
+
 
     const handleOpen = () => {
         setOpen(true);
@@ -121,6 +126,7 @@ function PreClasses (props: RouteComponentProps) {
             className: "",
             instructor: "",
             token: "",
+            itoken: "",
             direct: false,
         });
     }
@@ -199,9 +205,19 @@ function PreClasses (props: RouteComponentProps) {
                     </Button>
                     </Grid>
                 </Grid>
+                
                 <Typographic variant="h3" color="inherit">
+                    <Typographic variant="caption" color="inherit">
+                        {t('gtoken')} <br />
+                    </Typographic>
                     {info.token}
+                    <br />
+                    <Typographic variant="caption" color="inherit">
+                        {t('itoken')} <br />
+                    </Typographic>
+                    {info.itoken}
                 </Typographic>
+
                 <FormControlLabel
                     control={
                         <Checkbox checked={info.direct}
@@ -226,7 +242,8 @@ function PreClasses (props: RouteComponentProps) {
                 state={popen} 
                 className={info.className} 
                 instructor={info.instructor} 
-                token={info.token} 
+                token={info.token}
+                itoken={info.itoken}
                 isDirect={info.direct}
             />
         }

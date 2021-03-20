@@ -8,6 +8,9 @@
     "submit": "Submit",
     "add": "Add",
 
+    "gtoken": "Classroom Entry Token (For students)",
+    "itoken": "Classroom Management Token (Instructor ONLY!)",
+
     "detail.1.1": "Upload the source codes.",
     "detail.1.2": "They can be .zip file or Github URL.",
     "detail.2.1": "Submitted tasks are graded with static analysis,",
