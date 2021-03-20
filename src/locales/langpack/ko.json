@@ -40,6 +40,11 @@
     "dialog.1": "채점 기준",
     "dialog.2": "정적 분석을 통해 검사할 항목을 선택할 수 있습니다.",
 
+    "policy.count.methods": "최소 메서드 개수",
+    "policy.count.fields": "최소 필드 개수",
+    "policy.count.enhance": "Enhanced for 개수",
+    "policy.count.1": "세부 구현사항 개수",
+    "policy.count.2": "전체 소스 코드를 기반으로 개수를 세며, 하나라도 기준에 어긋나면 오답 처리합니다.",
     "policy.basic.deduct.boolean": "위반 시 감점할 점수",
     "policy.basic.deduct": "각 항목 당 감점할 점수",
     "policy.basic.max": "최대 감점 점수",

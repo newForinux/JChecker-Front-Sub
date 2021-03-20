@@ -40,6 +40,11 @@
     "dialog.1": "Grading policy",
     "dialog.2": "Select which details to examine using static analysis.",
 
+    "policy.count.methods": "Mininum number of methods",
+    "policy.count.fields": "Minimum number of fields",
+    "policy.count.enhance": "Minimum number of Enhanced for statement",
+    "policy.count.1": "Minimum number of details",
+    "policy.count.2": "Counts the total number of codes, and any violation of the standard is wrong.",
     "policy.basic.deduct.boolean": "Deduction for violation",
     "policy.basic.deduct": "Deduction per violation",
     "policy.basic.max": "Maximum deduction",
