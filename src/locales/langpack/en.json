@@ -7,6 +7,8 @@
     "next": "Next",
     "submit": "Submit",
     "add": "Add",
+    "studentNum": "Student number",
+    "studentNum.placeholder": "Enter your student number",
 
     "gtoken": "Classroom Entry Token (For students)",
     "itoken": "Classroom Management Token (Instructor ONLY!)",
@@ -17,6 +19,11 @@
     "detail.2.2": "scoring criteria, and multiple test cases.",
     "detail.3.1": "Use the chart", 
     "detail.3.2": "to visualize the results.",
+
+    "error.1": "Something is wrong...",
+    "error.2": "This may be an invalid file, internal server error, or an invalid address request.",
+    "error.3": "If this page came out when entering the class, please check if the token is correct.",
+    "error.4": "And if this page appears when submitting, check your file and try again.",
 
     "entrance.class title": "ENTRANCE",
     "entrance.class detail": "Enter the classroom using the class token you received in advance.",
@@ -40,6 +47,7 @@
     "dialog.1": "Grading policy",
     "dialog.2": "Select which details to examine using static analysis.",
 
+    "policy.point": "Total score",
     "policy.count.methods": "Mininum number of methods",
     "policy.count.fields": "Minimum number of fields",
     "policy.count.enhance": "Minimum number of Enhanced for statement",

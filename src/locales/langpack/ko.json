@@ -7,6 +7,8 @@
     "next": "다음으로",
     "submit": "완료",
     "add": "추가",
+    "studentNum": "학번",
+    "studentNum.placeholder": "학번을 입력하세요.",
 
     "gtoken": "클래스룸 입장 토큰 (제출용)",
     "itoken": "클래스룸 관리 토큰 (채점자용)",
@@ -17,6 +19,11 @@
     "detail.2.2": "여러 테스트 케이스로 제출된 과제를 채점합니다.",
     "detail.3.1": "도표를 활용해", 
     "detail.3.2": "채점 결과를 시각화합니다.",
+
+    "error.1": "요청을 처리할 수 없습니다...",
+    "error.2": "잘못된 파일 형식, 채점 서버 오류, 또는 잘못된 주소 요청일 수 있습니다.",
+    "error.3": "클래스 진입 시 이 페이지가 나왔다면 토큰이 정확한지 확인해주세요.",
+    "error.4": "채점 시 이 페이지가 나왔다면 올바른 파일인지 확인 후 다시 시도해주세요.",
 
     "entrance.class title": "클래스 입장",
     "entrance.class detail": "미리 받은 클래스 토큰을 이용해 강의실에 입장합니다.",
@@ -40,6 +47,7 @@
     "dialog.1": "채점 기준",
     "dialog.2": "정적 분석을 통해 검사할 항목을 선택할 수 있습니다.",
 
+    "policy.point": "총점",
     "policy.count.methods": "최소 메서드 개수",
     "policy.count.fields": "최소 필드 개수",
     "policy.count.enhance": "Enhanced for 개수",
