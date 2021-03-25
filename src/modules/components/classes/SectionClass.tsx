@@ -105,7 +105,7 @@ function SectionClass(props: RouteComponentProps<RouteParamsProps>) {
     useEffect(() => {
         if (classroom === initial) {
             const currentClassroomState = async (): Promise<ClassroomProps[]> => {
-                return await axios.get<ClassroomProps[]>('/api/token/')
+                return await axios.get<ClassroomProps[]>('http://localhost:7777/api/token/')
                 .then((response) => {
                     return response.data
                 });

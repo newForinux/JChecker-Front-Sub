@@ -80,7 +80,7 @@ function EachClass(props: RouteComponentProps<RouteParamsProps>) {
     useEffect(() => {
         if (classroom === initial) {
             const currentClassroomState = async (): Promise<ClassroomInstProps[]> => {
-                return await axios.get<ClassroomInstProps[]>('/api/token/')
+                return await axios.get<ClassroomInstProps[]>('http://localhost:7777/api/token/')
                 .then((response) => {
                     return response.data
                 });
@@ -92,7 +92,7 @@ function EachClass(props: RouteComponentProps<RouteParamsProps>) {
                 
                 if (response.find(element => element.itoken === props.match.params.token) === undefined) {
                     props.history.push('/');
-                    alert("클래스가 없습니다");
+                    alert("클래스가 없습니다.😅");
                 }
             })
         }

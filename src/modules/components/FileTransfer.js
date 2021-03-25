@@ -39,7 +39,7 @@ function FileUploadComponent (props) {
         const formData = new FormData();
         formData.append('file', file);
 
-        return axios.post('/api/grade/execute', formData, {
+        return axios.post('http://localhost:7777/api/grade/execute', formData, {
             
             params: {
                 studentNum: props.id,
