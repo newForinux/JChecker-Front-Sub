@@ -2,6 +2,7 @@ import { Link, Theme, withStyles, WithStyles} from "@material-ui/core";
 import SectionLayout from './SectionLayout';
 import Typographic from '../components/CTypography';
 import React from "react";
+import { useTranslation } from "react-i18next/";
 
 const backgroundImage = 'https://images.unsplash.com/photo-1517512006864-7edc3b933137?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
 
@@ -32,27 +33,28 @@ const styles = (theme: Theme) => ({
 
 function SectionBegin(props: Props) {
     const { classes } = props;
+    const { t } = useTranslation();
 
     return (
         <SectionLayout backgroundClassName={classes.background}>
             <img style={{ display: 'none' }} src={backgroundImage} alt="priority" />
             <Typographic color="inherit" align="center" variant="h1" marked="center">
-                지금 시작하세요.
+                {t('begin.getting start')}
             </Typographic>
             <Typographic color="inherit" align="center" variant="h5" className={classes.h5}>
                 <Link href="/classes" color="secondary">
-                    인증 토큰을 입력해
+                    {t('begin.enter token')}
                 </Link>
-                    &nbsp;현재 열린 클래스에 입장합니다.<br /><br />
-                클래스를 운영하고 싶으신가요? &nbsp;
+                    &nbsp;{t('begin.enter token rest')}<br /><br />
+                {t('begin.enter generate pre')} &nbsp;
                 <Link href="/instructors" color="secondary">
-                    인증 토큰을 발행
+                    {t('begin.enter generate token')}
                 </Link>
-                할 수 있습니다.
+                {t('begin.enter generate rest')}
             </Typographic>
         </SectionLayout>
     )
 }
 
 
-export default withStyles(styles)(SectionBegin);
+export default React.memo(withStyles(styles)(SectionBegin));

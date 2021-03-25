@@ -1,6 +1,17 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, makeStyles, TextField } from "@material-ui/core";
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    FormControl, 
+    Grid, 
+    makeStyles, 
+    TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
+import { useTranslation } from "react-i18next";
+import { DialogRawProp } from ".";
 
 
 const style = makeStyles({
@@ -11,14 +22,9 @@ const style = makeStyles({
 });
 
 
-export interface ClassDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
 
-
-export default function ClassDialog(props: ClassDialogRawProps) {
+export default function ClassDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const classes = style();
     const { open: isOpen } = props;
     
@@ -54,7 +60,6 @@ export default function ClassDialog(props: ClassDialogRawProps) {
 
 
     useEffect(() => {
-        console.log(resCS);
         props.onCreate("classes", resCS);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resCS]);
@@ -101,11 +106,11 @@ export default function ClassDialog(props: ClassDialogRawProps) {
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-cs">필수 구현 클래스</DialogTitle>
+        <DialogTitle id="form-dialog-cs">{t('policy.class.1')}</DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                필수로 구현해야 할 클래스가 있나요?        
-                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
+                {t('policy.class.2')}     
+                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>{t('add')}</Button>
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -113,7 +118,7 @@ export default function ClassDialog(props: ClassDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="각 항목 당 감점할 점수"
+                        label={t('policy.basic.deduct')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -123,7 +128,7 @@ export default function ClassDialog(props: ClassDialogRawProps) {
                     <TextField
                         type="number"
                         value={max_deduct}
-                        label="최대 감점 점수"
+                        label={t('policy.basic.max')}
                         size="small"
                         margin="dense"
                         onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
@@ -139,7 +144,7 @@ export default function ClassDialog(props: ClassDialogRawProps) {
                                 value={required[index] || ""}
                                 variant="outlined"
                                 id={"cs-" + index}
-                                label="클래스 네임"
+                                label={t('class name')}
                                 name={"cs-" + index}
                                 size="medium"
                                 className="cs"
@@ -153,10 +158,10 @@ export default function ClassDialog(props: ClassDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -1,29 +1,44 @@
 import AppBar from '../components/AppbarLayout';
-import { createStyles, Link, makeStyles, Theme } from '@material-ui/core';
+import { Button, Link, Theme, withStyles, WithStyles } from '@material-ui/core';
 import React from 'react';
 import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
+import i18n, { Languages } from '../../locales/i18n';
 
 
-const useStyles = makeStyles((theme: Theme) => 
-    createStyles({
-        title: {
-            fontSize: 42,
-            letterSpacing: 7,
-        },
-        placeholder: toolbarStyles(theme).root,
-        toolbar: {
-            justifyContent: 'space-between',
-        },
-        left: {
-            flex: 1,
-        },
-    })
-);
+interface Props extends WithStyles<typeof astyles> {}
+
+
+const astyles = (theme: Theme) => ({
+    placeholder: toolbarStyles(theme).root,
+    toolbar: {
+        justifyContent: 'space-between',
+    },
+    right: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    langIcon: {
+        marginLeft: theme.spacing(2),
+    },
+    left: {
+        flex: 1,
+    },
+    logo: {
+        marginTop: theme.spacing(1),
+        maxWidth: "300px",
+    }
+});
 
 
 
-export default function AppBarView () {
-    const classes = useStyles();
+function AppBarView (props: Props) {
+    const { classes } = props;
+
+    const handleChangeLang = (lang: Languages) => {
+        i18n.changeLanguage(lang);
+        localStorage.setItem('language', lang);
+    }
 
     return (
         <div>
@@ -34,14 +49,27 @@ export default function AppBarView () {
                         variant="h3"
                         underline="none"
                         color="inherit"
-                        className={classes.title}
                         href="/"
                     >
-                        {'JChecker'}
+                        <img src="/static/logo.png" alt="logo" className={classes.logo} />
+
                     </Link>
+
+                    <div className={classes.right}>
+                        <Button className={classes.langIcon} onClick={() => handleChangeLang('ko')}>
+                            <img src="/static/kor.svg" alt="kor" />
+                        </Button>
+                        <Button className={classes.langIcon} onClick={() => handleChangeLang('en')}>
+                            <img src="/static/eng.svg" alt="eng" />
+                        </Button>
+                    </div>
+                    
                 </Toolbar>
             </AppBar>
             <div className={classes.placeholder} />
         </div>
     );
 }
+
+
+export default React.memo(withStyles(astyles)(AppBarView));

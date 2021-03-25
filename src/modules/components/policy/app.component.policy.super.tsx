@@ -1,6 +1,17 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, makeStyles, TextField } from "@material-ui/core";
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    FormControl, 
+    Grid, 
+    makeStyles, 
+    TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
+import { DialogRawProp } from ".";
+import { useTranslation } from "react-i18next";
 
 
 const style = makeStyles({
@@ -11,15 +22,9 @@ const style = makeStyles({
 });
 
 
-export interface SuperclassDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
 
-
-export default function SuperclassDialog(props: SuperclassDialogRawProps) {
-
+export default function SuperclassDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const classes = style();
     const { open: isOpen } = props;
     
@@ -55,7 +60,6 @@ export default function SuperclassDialog(props: SuperclassDialogRawProps) {
 
 
     useEffect(() => {
-        console.log(resSpc);
         props.onCreate("inheritSuper", resSpc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resSpc]);
@@ -103,11 +107,15 @@ export default function SuperclassDialog(props: SuperclassDialogRawProps) {
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-spc">슈퍼 클래스 상속 여부</DialogTitle>
+        <DialogTitle id="form-dialog-spc">
+            {t('policy.super.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                슈퍼 클래스 상속 여부를 판단합니다.
-                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
+                {t('policy.super.2')}
+                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>
+                    {t('add')}
+                </Button>
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -115,7 +123,7 @@ export default function SuperclassDialog(props: SuperclassDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="각 항목 당 감점할 점수"
+                        label={t('policy.basic.deduct')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -125,7 +133,7 @@ export default function SuperclassDialog(props: SuperclassDialogRawProps) {
                     <TextField
                         type="number"
                         value={max_deduct}
-                        label="최대 감점 점수"
+                        label={t('policy.basic.max')}
                         size="small"
                         margin="dense"
                         onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
@@ -141,7 +149,7 @@ export default function SuperclassDialog(props: SuperclassDialogRawProps) {
                                 value={required[index] || ""}
                                 variant="outlined"
                                 id={"spc-" + index}
-                                label="슈퍼 클래스 네임"
+                                label={t('class name')}
                                 name={"spc-" + index}
                                 size="medium"
                                 className="spc"
@@ -155,10 +163,10 @@ export default function SuperclassDialog(props: SuperclassDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>

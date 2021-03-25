@@ -1,29 +1,20 @@
-import { AppBar, Link, makeStyles, TextField, Theme } from "@material-ui/core";
+import { AppBar, Link, makeStyles, Theme } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router"
 import WithRoot from '../../root';
 import SectionLayout from "../../views/SectionLayout";
-import Typographic from "../../components/CTypography";
-import Toolbar from '../../components/Toolbar';
+import Typographic from "../CTypography";
+import Toolbar from '../Toolbar';
 import AppFooter from "../../views/Footer";
 import axios from "axios";
-import FileUploadComponent from "../FileTransfer";
-import { ClassroomProps, RouteParamsProps } from ".";
-import { useTranslation } from "react-i18next";
+import { ClassroomInstProps, RouteParamsProps } from ".";
 
 
 
-const backgroundImages = [
-    'https://images.unsplash.com/photo-1613169620329-6785c004d900?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-    'https://images.unsplash.com/photo-1611572698227-3f61a040f13d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-    'https://images.unsplash.com/photo-1605509407676-36601014de0a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80',
-    'https://images.unsplash.com/photo-1612192047524-9c90876522b6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1187&q=80',
-    'https://images.unsplash.com/photo-1613852706285-4b080230e8db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-    'https://images.unsplash.com/photo-1591931644839-fcbf1c4814ed?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80',
-];
+const backgroundImages = "https://images.unsplash.com/photo-1614179924047-e1ab49a0a0cf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80";
 
 
-const backgroundImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+const backgroundImage = backgroundImages;
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -74,38 +65,22 @@ const useStylesLayout = makeStyles((theme: Theme) => ({
 }));
 
 
-function SectionClass(props: RouteComponentProps<RouteParamsProps>) {
-    const { t } = useTranslation();
+function EachClass(props: RouteComponentProps<RouteParamsProps>) {
     const classesStyle = useStyles();
     const classesLayout = useStylesLayout();
 
     const initial = {
-        token: "",
+        itoken: "",
         className: "",
         instructor: "",
         createDate: "",
     };
     const [classroom, setClassroom] = useState(initial);
-    const [studentID, setStudentID] = useState("");
-    const [valid, setValid] = useState(false);
-
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setStudentID(e.target.value);
-    }
-
-    
-    const handleCreate = (status: boolean) => {
-        
-        if (!status)
-            props.history.push('/error');
-    }
-
 
     useEffect(() => {
         if (classroom === initial) {
-            const currentClassroomState = async (): Promise<ClassroomProps[]> => {
-                return await axios.get<ClassroomProps[]>('http://localhost:7777/api/token/')
+            const currentClassroomState = async (): Promise<ClassroomInstProps[]> => {
+                return await axios.get<ClassroomInstProps[]>('http://localhost:7777/api/token/')
                 .then((response) => {
                     return response.data
                 });
@@ -113,17 +88,12 @@ function SectionClass(props: RouteComponentProps<RouteParamsProps>) {
 
             currentClassroomState()
             .then(response => {
-                setClassroom(response.find(element => element.token === props.match.params.token) || initial);
+                setClassroom(response.find(element => element.itoken === props.match.params.token) || initial);
                 
-                if (response.find(element => element.token === props.match.params.token) === undefined) {
+                if (response.find(element => element.itoken === props.match.params.token) === undefined) {
                     props.history.push('/');
                     alert("클래스가 없습니다.😅");
-                } else {
-                    setValid(true);
                 }
-            })
-            .catch(response => {
-                props.history.push('/error');
             })
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -155,20 +125,6 @@ function SectionClass(props: RouteComponentProps<RouteParamsProps>) {
                     opened by <b>{classroom.instructor}</b> on {classroom.createDate}
                 </Typographic>
 
-                <TextField 
-                    value={studentID} 
-                    onChange={handleChange} 
-                    label={t('studentNum')} 
-                    variant="outlined"
-                    style={{ margin: 8, borderColor: "white", borderRadius: 4, backgroundColor: "white"}}
-                    placeholder={t('studentNum.placeholder')} 
-                    margin="normal" 
-                />
-
-
-                {valid &&
-                    <FileUploadComponent name={classroom.token} id={studentID} onCreate={handleCreate} />
-                }
             </SectionLayout>
             <AppFooter />
         </>
@@ -177,4 +133,4 @@ function SectionClass(props: RouteComponentProps<RouteParamsProps>) {
 }
 
 
-export default React.memo(WithRoot(SectionClass));
+export default React.memo(WithRoot(EachClass));

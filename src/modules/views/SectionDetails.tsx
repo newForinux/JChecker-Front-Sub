@@ -1,6 +1,7 @@
 import { Container, createStyles, Grid, Theme, withStyles, WithStyles } from "@material-ui/core";
 import Typographic from "../components/CTypography";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 
 interface Props extends WithStyles<typeof styles> {}
@@ -49,6 +50,7 @@ const styles = (theme: Theme) => createStyles({
 
 function SectionDetail(props: Props) {
     const { classes } = props;
+    const { t } = useTranslation();
 
     return (
         <section className={classes.root}>
@@ -72,7 +74,7 @@ function SectionDetail(props: Props) {
                                     className={classes.image}
                                 />
                                 <Typographic variant="h5" align="center">
-                                    소스 코드를 업로드합니다.<br />제출 방식은 .zip 또는 Github URL이 될 수 있습니다.
+                                    {t('detail.1.1')} <br /> {t('detail.1.2')}
                                 </Typographic>
                             </div>
                         </Grid>
@@ -85,7 +87,7 @@ function SectionDetail(props: Props) {
                                     className={classes.image}
                                 />
                                 <Typographic variant="h5" align="center">
-                                    정적 분석 및 채점 기준, <br />여러 테스트 케이스로 제출된 과제를 채점합니다.
+                                    {t('detail.2.1')} <br /> {t('detail.2.2')}
                                 </Typographic>
                             </div>
                         </Grid>
@@ -98,7 +100,7 @@ function SectionDetail(props: Props) {
                                     className={classes.image}
                                 />
                                 <Typographic variant="h5" align="center">
-                                    도표를 활용해<br />채점 결과를 시각화합니다.
+                                    {t('detail.3.1')} <br /> {t('detail.3.2')}
                                 </Typographic>
                             </div>
                         </Grid>
@@ -111,4 +113,4 @@ function SectionDetail(props: Props) {
 
 
 
-export default withStyles(styles)(SectionDetail);
+export default React.memo(withStyles(styles)(SectionDetail));

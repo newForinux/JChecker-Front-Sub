@@ -1,14 +1,41 @@
-import { IconButton, makeStyles, TextField, Theme } from "@material-ui/core";
+import { IconButton, 
+    makeStyles, 
+    TextField, 
+    Theme, 
+    Link as MLink, 
+    Dialog, 
+    DialogTitle, 
+    DialogContent, 
+    Checkbox, 
+    FormControlLabel, 
+    DialogActions, 
+    Button, 
+    DialogContentText, 
+    FormControl,
+    Grid} from "@material-ui/core";
 import StarterMajorLayout from "./SectionLayout";
 import Typographic from "../components/CTypography";
 import { Link, RouteComponentProps } from "react-router-dom";
 import React, { useState } from "react";
 import SearchIcon from '@material-ui/icons/Search';
-import AppbarView from './Appbar';
+import AppBarView from './Appbar';
 import WithRoot from '../root';
+import PolicyDialog from "../components/PolicyDialog";
+import Footer from "./Footer";
+import { useTranslation } from "react-i18next";
 
 
 const backgroundImage = 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
+
+
+interface InfoProps {
+    className: string;
+    instructor: string;
+    token: string;
+    itoken: string;
+    direct: boolean;
+}
+
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -34,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     more: {
         marginTop: theme.spacing(2),
     },
+    dialogText: {
+        marginBottom: theme.spacing(1),
+    },
     textField: {
         background: 'white',
     },
@@ -46,30 +76,80 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function PreClasses (props: RouteComponentProps) {
     const classes = useStyles();
-    const [value, setValue] = useState("");
 
+    const { t } = useTranslation();
+
+    const [value, setValue] = useState("");
+    const [open, setOpen] = useState(false);
+    const [popen, setPopen] = useState(false);
+    const [info, setInfo] = useState({
+        className: "",
+        instructor: "",
+        token: "",
+        itoken: "",
+        direct: false,
+    });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     }
 
+    const handleInfoChange = (prop: keyof InfoProps) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInfo({ ...info, [prop]: e.target.value });
+    }
+
+    const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInfo({ ...info, direct: !info.direct });
+    }
+
+    const handleGenerate = () => {
+        let random =  Math.random().toString(36).substr(2, 11);
+        let irandom = Math.random().toString(36).substr(2, 6);
+        setInfo({ ...info, token: random, itoken: irandom });
+    }
+
+
+
+    const handleOpen = () => {
+        setOpen(true);
+    }
+
+    const handlePOpen = () => {
+        setOpen(false);
+        setPopen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+        setPopen(false);
+        setInfo({
+            className: "",
+            instructor: "",
+            token: "",
+            itoken: "",
+            direct: false,
+        });
+    }
+
 
     return (
         <>
-        <AppbarView />
+        <AppBarView />
         <StarterMajorLayout backgroundClassName={classes.background}>
             {}
             <img style={{ display : 'none' }} src={backgroundImage} alt="prioirty" />
             <Typographic color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
-                과제를 만드는 채점자이신가요?
+                {t('entrance.instructor title')}
             </Typographic>
             <Typographic color="inherit" align="center" variant="h5" className={classes.h5}>
-                토큰을 생성해 클래스를 만들 수 있습니다.<br /><br /><br />
-                이미 토큰이 있으신가요?<br />
-                토큰을 입력해 클래스를 관리하세요!
+                <MLink onClick={handleOpen} color="secondary">
+                    <b>{t('entrance.instructor detail.1')}</b> 
+                </MLink> {t('entrance.instructor detail.2')}<br /><br /><br />
+                {t('entrance.instructor detail.3')}<br />
+                {t('entrance.instructor detail.4')}
             </Typographic>
-            <TextField value={value || ""} onChange={handleChange} label="토큰" style={{ margin: 8, borderColor: "white", borderRadius: 4, backgroundColor: "white", width: 500, fontSize: 16 }} 
-                placeholder="클래스 토큰을 입력하세요" margin="normal" variant="outlined" InputProps={{
+            <TextField value={value || ""} onChange={handleChange} label={t('input.')} style={{ margin: 8, borderColor: "white", borderRadius: 4, backgroundColor: "white", width: 500, fontSize: 16 }} 
+                placeholder={t('input.token')} margin="normal" variant="outlined" InputProps={{
                     classes: {
                         input: classes.resize,
                     },
@@ -81,10 +161,95 @@ function PreClasses (props: RouteComponentProps) {
                         </Link>
                     )
                 }} />
-            <Typographic variant="body2" color="inherit" className={classes.more}>
-                with ISEL, HGU.
-            </Typographic>
         </StarterMajorLayout>
+        
+        {open &&
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="instructor-token-generator"
+            aria-describedby="instructor-token-description"
+            disableBackdropClick={true}
+            disableEscapeKeyDown={true}
+            maxWidth="sm"
+            scroll='paper'
+        >
+            <DialogTitle id="instructor-token-title">{t('entrance.instructor.tdialog.1')}</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    {t('entrance.instructor.tdialog.e')} <b>{t('entrance.instructor.tdialog.2')}</b>{t('entrance.instructor.tdialog.3')}<br />
+                    {t('entrance.instructor.tdialog.4')}
+                </DialogContentText>
+                <Grid container spacing={2}>
+                    <Grid xs={12} item>
+                        <FormControl margin="normal">
+                            <TextField
+                                value={info.className || ""}
+                                variant="outlined"
+                                label={t('class name')}
+                                size="medium"
+                                className={classes.dialogText}
+                                onChange={handleInfoChange("className")}
+                            />
+                            <TextField
+                                value={info.instructor || ""}
+                                variant="outlined"
+                                label={t('instructor name')}
+                                size="medium"
+                                className={classes.dialogText}
+                                onChange={handleInfoChange("instructor")}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid xs={12} item>
+                    <Button variant="contained" color="primary" onClick={handleGenerate} disabled={info.className.length < 3 || info.instructor.length < 3}>
+                        {t('generate.token')}
+                    </Button>
+                    </Grid>
+                </Grid>
+                
+                <Typographic variant="h3" color="inherit">
+                    <Typographic variant="caption" color="inherit">
+                        {t('gtoken')} <br />
+                    </Typographic>
+                    {info.token}
+                    <br />
+                    <Typographic variant="caption" color="inherit">
+                        {t('itoken')} <br />
+                    </Typographic>
+                    {info.itoken}
+                </Typographic>
+
+                <FormControlLabel
+                    control={
+                        <Checkbox checked={info.direct}
+                                onChange={handleChecked}
+                                name="directFeedback"
+                                color="primary" />}
+                                label={t('entrance.instructor.tdialog.2')}
+                        />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                    {t('closed')}
+                </Button>
+                <Button onClick={handlePOpen} color="primary" disabled={info.token.length > 0 ? false : true}>
+                    {t('next')}
+                </Button>
+            </DialogActions>
+        </Dialog>
+        }
+        {popen &&
+            <PolicyDialog 
+                state={popen} 
+                className={info.className} 
+                instructor={info.instructor} 
+                token={info.token}
+                itoken={info.itoken}
+                isDirect={info.direct}
+            />
+        }
+            <Footer />
         </>
     );
 }

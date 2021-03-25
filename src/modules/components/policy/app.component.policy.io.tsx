@@ -1,6 +1,17 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, makeStyles, TextField } from "@material-ui/core";
+import { Button, 
+    Dialog, 
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle, 
+    FormControl, 
+    Grid, 
+    makeStyles, 
+    TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
+import { useTranslation } from "react-i18next";
+import { DialogRawProp } from ".";
 
 
 const style = makeStyles({
@@ -11,14 +22,9 @@ const style = makeStyles({
 });
 
 
-export interface InputDialogRawProps {
-    keepMounted: boolean;
-    open: boolean;
-    onCreate: Function;
-}
 
-
-export default function InputDialog(props: InputDialogRawProps) {
+export default function InputDialog(props: DialogRawProp) {
+    const { t } = useTranslation();
     const classes = style();
     const { open: isOpen } = props;
     
@@ -57,7 +63,6 @@ export default function InputDialog(props: InputDialogRawProps) {
 
 
     useEffect(() => {
-        console.log(resIO);
         props.onCreate("runtimeCompare", resIO);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resIO]);
@@ -111,11 +116,15 @@ export default function InputDialog(props: InputDialogRawProps) {
                 scroll='paper'
                 disableEscapeKeyDown
         >
-        <DialogTitle id="form-dialog-io">테스트 케이스</DialogTitle>
+        <DialogTitle id="form-dialog-io">
+            {t('policy.io.1')}
+        </DialogTitle>
         <DialogContent dividers>
             <DialogContentText>
-                제출 코드를 실행하면서 검사할 케이스를 추가합니다.
-                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>추가</Button>
+                {t('policy.io.2')}
+                <Button variant="outlined" onClick={() => appendFields()} startIcon={<AddIcon />} className={classes.buttonRight}>
+                    {t('add')}
+                </Button>
             </DialogContentText>
 
             <Grid container spacing={2}>
@@ -123,7 +132,7 @@ export default function InputDialog(props: InputDialogRawProps) {
                     <TextField
                         type="number"
                         value={deduct}
-                        label="각 항목 당 감점할 점수"
+                        label={t('policy.basic.deduct')}
                         size="small"
                         margin="dense"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
@@ -133,7 +142,7 @@ export default function InputDialog(props: InputDialogRawProps) {
                     <TextField
                         type="number"
                         value={max_deduct}
-                        label="최대 감점 점수"
+                        label={t('policy.basic.max')}
                         size="small"
                         margin="dense"
                         onChange={e => setMax_deduct(parseFloat(e.target.value) || max_deduct)}
@@ -149,7 +158,7 @@ export default function InputDialog(props: InputDialogRawProps) {
                                 value={inputData[index] || ""}
                                 variant="outlined"
                                 id={"in-" + index}
-                                label="입력값"
+                                label={t('policy.io.input')}
                                 name={"in-" + index}
                                 className="io"
                                 multiline
@@ -163,7 +172,7 @@ export default function InputDialog(props: InputDialogRawProps) {
                                 value={outputData[index] || ""}
                                 variant="outlined"
                                 id={"out-" + index}
-                                label="출력값"
+                                label={t('policy.io.output')}
                                 name={"out-" + index}
                                 className="oi"
                                 multiline
@@ -177,10 +186,10 @@ export default function InputDialog(props: InputDialogRawProps) {
 
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
-                        닫기
+                    {t('closed')}
                 </Button>
                 <Button onClick={handleResIO} color="primary">
-                        완료
+                    {t('submit')}
                 </Button>
             </DialogActions>
         </Dialog>
