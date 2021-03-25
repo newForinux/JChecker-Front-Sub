@@ -10,7 +10,7 @@ import { Button,
     TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 import { DialogRawProp } from ".";
 
 
@@ -61,7 +61,6 @@ export default function ExceptionDialog(props: DialogRawProp) {
 
 
     useEffect(() => {
-        console.log(resCec);
         props.onCreate("customException", resCec);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resCec]);

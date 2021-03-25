@@ -7,7 +7,7 @@ import { Button,
     Grid, 
     TextField } from "@material-ui/core";
 import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 import { DialogRawProp } from ".";
 
 
@@ -25,7 +25,7 @@ export default function CountDialog(props: DialogRawProp) {
     const [resCnt, setResCnt] = useState({
         state: false,
         methodCount: 0,
-        fieldsCount: 0,
+        fieldCount: 0,
         enForCount: 0,
         deductPoint : 0,
     });
@@ -44,7 +44,6 @@ export default function CountDialog(props: DialogRawProp) {
 
 
     useEffect(() => {
-        console.log(resCnt);
         props.onCreate("count", resCnt);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resCnt]);
@@ -55,7 +54,7 @@ export default function CountDialog(props: DialogRawProp) {
         setResCnt({
             state: false,
             methodCount: 0,
-            fieldsCount: 0,
+            fieldCount: 0,
             enForCount: 0,
             deductPoint : 0,
         });
@@ -67,7 +66,7 @@ export default function CountDialog(props: DialogRawProp) {
         setResCnt({
             state: true,
             methodCount: methods,
-            fieldsCount: fields,
+            fieldCount: fields,
             enForCount: enhancedFor,
             deductPoint : deduct,
         });
@@ -103,36 +102,38 @@ export default function CountDialog(props: DialogRawProp) {
                         value={deduct}
                         label={t('policy.basic.deduct.boolean')}
                         size="small"
-                        margin="dense"
+                        margin="normal"
                         onChange={e => setDeduct(parseFloat(e.target.value) || deduct)}
                     />
                 </Grid>
-                <TextField
+                <Grid item>
+                    <TextField
                         type="number"
                         value={methods}
                         label={t('policy.count.methods')}
                         size="small"
-                        margin="dense"
+                        margin="normal"
                         onChange={e => setMethods(parseInt(e.target.value) || methods)}
-                />
+                    />
 
-                <TextField
+                    <TextField
                         type="number"
                         value={fields}
                         label={t('policy.count.fields')}
                         size="small"
-                        margin="dense"
+                        margin="normal"
                         onChange={e => setFields(parseInt(e.target.value) || fields)}
-                />
+                    />
 
-                <TextField
+                    <TextField
                         type="number"
                         value={enhancedFor}
                         label={t('policy.count.enhance')}
                         size="small"
-                        margin="dense"
+                        margin="normal"
                         onChange={e => setEnhancedFor(parseInt(e.target.value) || enhancedFor)}
-                />
+                    />
+                </Grid>
             </Grid>
             </DialogContent>
 

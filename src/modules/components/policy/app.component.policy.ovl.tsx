@@ -62,7 +62,6 @@ export default function OverloadingDialog(props: DialogRawProp) {
 
 
     useEffect(() => {
-        console.log(resOvl);
         props.onCreate("overloading", resOvl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resOvl]);

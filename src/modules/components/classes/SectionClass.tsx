@@ -1,4 +1,4 @@
-import { AppBar, Link, makeStyles, Theme } from "@material-ui/core";
+import { AppBar, Link, makeStyles, TextField, Theme } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router"
 import WithRoot from '../../root';
@@ -9,6 +9,7 @@ import AppFooter from "../../views/Footer";
 import axios from "axios";
 import FileUploadComponent from "../FileTransfer";
 import { ClassroomProps, RouteParamsProps } from ".";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -73,7 +74,8 @@ const useStylesLayout = makeStyles((theme: Theme) => ({
 }));
 
 
-function EachClass(props: RouteComponentProps<RouteParamsProps>) {
+function SectionClass(props: RouteComponentProps<RouteParamsProps>) {
+    const { t } = useTranslation();
     const classesStyle = useStyles();
     const classesLayout = useStylesLayout();
 
@@ -84,6 +86,21 @@ function EachClass(props: RouteComponentProps<RouteParamsProps>) {
         createDate: "",
     };
     const [classroom, setClassroom] = useState(initial);
+    const [studentID, setStudentID] = useState("");
+    const [valid, setValid] = useState(false);
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setStudentID(e.target.value);
+    }
+
+    
+    const handleCreate = (status: boolean) => {
+        
+        if (!status)
+            props.history.push('/error');
+    }
+
 
     useEffect(() => {
         if (classroom === initial) {
@@ -100,8 +117,13 @@ function EachClass(props: RouteComponentProps<RouteParamsProps>) {
                 
                 if (response.find(element => element.token === props.match.params.token) === undefined) {
                     props.history.push('/');
-                    alert("클래스가 없습니다");
+                    alert("클래스가 없습니다.😅");
+                } else {
+                    setValid(true);
                 }
+            })
+            .catch(response => {
+                props.history.push('/error');
             })
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,7 +154,21 @@ function EachClass(props: RouteComponentProps<RouteParamsProps>) {
                 <Typographic color="inherit" align="center" variant="h5" className={classesStyle.h5}>
                     opened by <b>{classroom.instructor}</b> on {classroom.createDate}
                 </Typographic>
-                <FileUploadComponent name = {classroom.token} />
+
+                <TextField 
+                    value={studentID} 
+                    onChange={handleChange} 
+                    label={t('studentNum')} 
+                    variant="outlined"
+                    style={{ margin: 8, borderColor: "white", borderRadius: 4, backgroundColor: "white"}}
+                    placeholder={t('studentNum.placeholder')} 
+                    margin="normal" 
+                />
+
+
+                {valid &&
+                    <FileUploadComponent name={classroom.token} id={studentID} onCreate={handleCreate} />
+                }
             </SectionLayout>
             <AppFooter />
         </>
@@ -141,4 +177,4 @@ function EachClass(props: RouteComponentProps<RouteParamsProps>) {
 }
 
 
-export default React.memo(WithRoot(EachClass));
+export default React.memo(WithRoot(SectionClass));

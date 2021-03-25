@@ -10,7 +10,7 @@ import { Button,
     TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 import { DialogRawProp } from ".";
 
 
@@ -63,7 +63,6 @@ export default function InputDialog(props: DialogRawProp) {
 
 
     useEffect(() => {
-        console.log(resIO);
         props.onCreate("runtimeCompare", resIO);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resIO]);

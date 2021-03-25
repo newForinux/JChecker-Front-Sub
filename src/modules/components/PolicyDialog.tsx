@@ -1,9 +1,9 @@
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormGroup } from "@material-ui/core";
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormGroup, TextField } from "@material-ui/core";
 import axios from "axios";
 import produce from "immer";
 
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 import ClassDialog from "./policy/app.component.policy.classes";
 import CompiledDialog from "./policy/app.component.policy.compiled";
 import CountDialog from "./policy/app.component.policy.count";
@@ -63,6 +63,7 @@ export default function SelectCond(props: PolicyProps) {
         feedback: props.isDirect,
         token: props.token,
         itoken: props.itoken,
+        point: 0,
         count: { state: false } as Object,
         compiled: { state: false } as Object,
         runtimeCompare: { state: false } as Object,
@@ -82,7 +83,6 @@ export default function SelectCond(props: PolicyProps) {
     const [open, setOpen] = useState(props.state);
     const [policy, setPolicy] = useState(initial_data);
     const [state, setState] = useState(initial_state); 
-
 
     const handleClose = () => {
         setOpen(false);
@@ -120,7 +120,6 @@ export default function SelectCond(props: PolicyProps) {
         axios.post("/api/token/save", JSON.stringify(policy, null, 2), {
             headers: {"Content-Type": 'application/json'}
         }).then((res) => {
-            console.log(res);
             setOpen(false);
             setState(initial_state);
         })
@@ -145,6 +144,14 @@ export default function SelectCond(props: PolicyProps) {
                 <DialogContentText>
                     {t('dialog.2')}
                 </DialogContentText>
+                    <TextField
+                        type="number"
+                        value={policy.point}
+                        label={t('policy.point')}
+                        size="small"
+                        margin="dense"
+                        onChange={e => setPolicy({ ...policy, point: (parseFloat(e.target.value) || policy.point)})}
+                    />
                     <FormGroup>
                         <FormControlLabel
                             control={

@@ -22,7 +22,7 @@ import AppBarView from './Appbar';
 import WithRoot from '../root';
 import PolicyDialog from "../components/PolicyDialog";
 import Footer from "./Footer";
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 
 
 const backgroundImage = 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
@@ -142,7 +142,9 @@ function PreClasses (props: RouteComponentProps) {
                 {t('entrance.instructor title')}
             </Typographic>
             <Typographic color="inherit" align="center" variant="h5" className={classes.h5}>
-                <MLink onClick={handleOpen} color="secondary">{t('entrance.instructor detail.1')}<b></b> </MLink> {t('entrance.instructor detail.2')}<br /><br /><br />
+                <MLink onClick={handleOpen} color="secondary">
+                    <b>{t('entrance.instructor detail.1')}</b> 
+                </MLink> {t('entrance.instructor detail.2')}<br /><br /><br />
                 {t('entrance.instructor detail.3')}<br />
                 {t('entrance.instructor detail.4')}
             </Typographic>

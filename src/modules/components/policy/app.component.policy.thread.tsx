@@ -7,7 +7,7 @@ import { Button,
     Grid, 
     TextField } from "@material-ui/core";
 import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 import { DialogRawProp } from ".";
 
 
@@ -37,7 +37,6 @@ export default function ThreadDialog(props: DialogRawProp) {
 
 
     useEffect(() => {
-        console.log(resThd);
         props.onCreate("thread", resThd);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resThd]);

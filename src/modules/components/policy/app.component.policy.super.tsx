@@ -11,7 +11,7 @@ import { Button,
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
 import { DialogRawProp } from ".";
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 
 
 const style = makeStyles({
@@ -60,7 +60,6 @@ export default function SuperclassDialog(props: DialogRawProp) {
 
 
     useEffect(() => {
-        console.log(resSpc);
         props.onCreate("inheritSuper", resSpc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resSpc]);

@@ -1,7 +1,7 @@
 import { Container, createStyles, Grid, Theme, withStyles, WithStyles } from "@material-ui/core";
 import Typographic from "../components/CTypography";
 import React from "react";
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 
 
 interface Props extends WithStyles<typeof styles> {}

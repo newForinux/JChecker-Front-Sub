@@ -10,7 +10,7 @@ import { Button,
     TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react"
 import AddIcon from '@material-ui/icons/Add';
-import { useTranslation } from "react-i18next/";
+import { useTranslation } from "react-i18next";
 import { DialogRawProp } from ".";
 
 
@@ -60,7 +60,6 @@ export default function InterfaceDialog(props: DialogRawProp) {
 
 
     useEffect(() => {
-        console.log(resItf);
         props.onCreate("inheritInterface", resItf);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[resItf]);

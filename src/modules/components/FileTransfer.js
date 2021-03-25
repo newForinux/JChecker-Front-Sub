@@ -42,7 +42,7 @@ function FileUploadComponent (props) {
         return axios.post('/api/grade/execute', formData, {
             
             params: {
-                studentNum: '21600065',
+                studentNum: props.id,
                 token: props.name,
             },
             
@@ -59,12 +59,14 @@ function FileUploadComponent (props) {
         fileUpload(file)
             .then((response) => {
                 setloading(false)
-                console.log(response.data)
+                console.log(response.status)
+                props.onCreate(true);
             })
             .catch((response) => {
                 setloading(false)
                 console.log(response.data)
                 console.log(response)
+                props.onCreate(false);
             })
     };
 
@@ -87,7 +89,7 @@ function FileUploadComponent (props) {
             <form onSubmit={upload} className={classes.form}>
                 <input accept="application/zip" type="file" onChange={fileChange} name="file" />      
                 <div className={classes.wrapper}>
-                    <Button type="submit" variant="contained" color="secondary" size="large" startIcon={<CloudUpload />} disabled={disabled} onClick={handleClick}>
+                    <Button type="submit" variant="contained" color="secondary" size="large" startIcon={<CloudUpload />} disabled={props.id.length === 0 || disabled} onClick={handleClick}>
                         Upload
                     </Button>
                     {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
