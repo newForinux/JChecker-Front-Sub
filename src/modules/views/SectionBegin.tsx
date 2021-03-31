@@ -42,12 +42,12 @@ function SectionBegin(props: Props) {
                 {t('begin.getting start')}
             </Typographic>
             <Typographic color="inherit" align="center" variant="h5" className={classes.h5}>
-                <Link href="/classes" color="secondary">
+                <Link href="/jchecker/classes" color="secondary">
                     {t('begin.enter token')}
                 </Link>
                     &nbsp;{t('begin.enter token rest')}<br /><br />
                 {t('begin.enter generate pre')} &nbsp;
-                <Link href="/instructors" color="secondary">
+                <Link href="/jchecker/instructors" color="secondary">
                     {t('begin.enter generate token')}
                 </Link>
                 {t('begin.enter generate rest')}

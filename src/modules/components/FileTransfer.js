@@ -39,7 +39,7 @@ function FileUploadComponent (props) {
         const formData = new FormData();
         formData.append('file', file);
 
-        return axios.post('http://localhost:7777/api/grade/execute', formData, {
+        return axios.post('/api/grade/execute', formData, {
             
             params: {
                 studentNum: props.id,
@@ -59,14 +59,11 @@ function FileUploadComponent (props) {
         fileUpload(file)
             .then((response) => {
                 setloading(false)
-                console.log(response.status)
-                props.onCreate(true);
+                props.onCreate(true, response.data);
             })
             .catch((response) => {
-                setloading(false)
-                console.log(response.data)
-                console.log(response)
-                props.onCreate(false);
+                setloading(false);
+                props.onCreate(false, null);
             })
     };
 
