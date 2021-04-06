@@ -111,7 +111,8 @@ function SectionClass(props: RouteComponentProps<RouteParamsProps>) {
     useEffect(() => {
         if (classroom === initial) {
             const currentClassroomState = async (): Promise<ClassroomProps[]> => {
-                return await axios.get<ClassroomProps[]>('/api/token/')
+                return await axios.get<ClassroomProps[]>('http://isel.lifove.net/api/token/')
+                //return await axios.get<ClassroomProps[]>('/api/token/')
                 .then((response) => {
                     return response.data
                 });
@@ -170,8 +171,6 @@ function SectionClass(props: RouteComponentProps<RouteParamsProps>) {
                     placeholder={t('studentNum.placeholder')} 
                     margin="normal" 
                 />
-
-
                 {valid &&
                     <FileUploadComponent name={classroom.token} id={studentID} onCreate={handleCreate} />
                 }

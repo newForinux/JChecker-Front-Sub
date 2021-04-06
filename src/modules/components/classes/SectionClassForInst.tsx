@@ -80,7 +80,8 @@ function EachClass(props: RouteComponentProps<RouteParamsProps>) {
     useEffect(() => {
         if (classroom === initial) {
             const currentClassroomState = async (): Promise<ClassroomInstProps[]> => {
-                return await axios.get<ClassroomInstProps[]>('/api/token/')
+                return await axios.get<ClassroomInstProps[]>('http://isel.lifove.net/api/token/')
+                //return await axios.get<ClassroomInstProps[]>('/api/token/')
                 .then((response) => {
                     return response.data
                 });

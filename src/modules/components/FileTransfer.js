@@ -39,8 +39,8 @@ function FileUploadComponent (props) {
         const formData = new FormData();
         formData.append('file', file);
 
-        return axios.post('/api/grade/execute', formData, {
-            
+        return axios.post('http://isel.lifove.net/api/grade/execute', formData, {
+        //return axios.post('/api/grade/execute', formData, {
             params: {
                 studentNum: props.id,
                 token: props.name,
@@ -86,7 +86,7 @@ function FileUploadComponent (props) {
             <form onSubmit={upload} className={classes.form}>
                 <input accept="application/zip" type="file" onChange={fileChange} name="file" />      
                 <div className={classes.wrapper}>
-                    <Button type="submit" variant="contained" color="secondary" size="large" startIcon={<CloudUpload />} disabled={props.id.length === 0 || disabled} onClick={handleClick}>
+                    <Button type="submit" variant="contained" color="secondary" size="large" startIcon={<CloudUpload />} disabled={props.id.length !== 8 || disabled} onClick={handleClick}>
                         Upload
                     </Button>
                     {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
