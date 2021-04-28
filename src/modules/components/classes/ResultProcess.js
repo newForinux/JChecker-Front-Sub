@@ -2,7 +2,7 @@ import { AppBar, Link, makeStyles, Button } from "@material-ui/core";
 import React from "react";
 import WithRoot from '../../root';
 import SectionLayout from "../../views/SectionLayout";
-import Typographic from "../CTypography";
+import Typographic from "../Typographic";
 import Toolbar from '../Toolbar';
 import AppFooter from "../../views/Footer";
 import PlaylistAddCheckRoundedIcon from '@material-ui/icons/PlaylistAddCheckRounded';
